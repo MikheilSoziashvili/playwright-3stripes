@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-nocheck
 const { defineConfig, devices } = require("@playwright/test");
 const { RPconfig } = require("../../../reportPortalProperties");
 
