@@ -1,0 +1,22 @@
+{
+  "name": "seed-tas-playwright-js",
+  "version": "23.09.14",
+  "description": "adidas Playwright seed - API mock tests tests sub-directory",
+  "main": "index.js",
+  "scripts": {
+    "%*-------------------------------------------API Mocks------------------------------------------------------------------%*": "%*-----# API Mocking ----%*",
+    "start-Server": "http-server -c-1 -p 9900 utils/demo-battery-api",
+    "test": "npx playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "~1.31.1",
+    "dotenv": "^16.0.3",
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}

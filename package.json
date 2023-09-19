@@ -1,0 +1,56 @@
+{
+  "name": "seed-tas-playwright-js",
+  "version": "23.09.14",
+  "description": "Samples examples for automation using playwright with JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "!%*----------------------------------Setup and Customization---------------------------*%!": "",
+    "preinstall": "node preinstall.js",
+    "postinstall": "node postinstall.js",
+    "customize": "node customizeProject.js",
+    "!%*----------------------------------Test Scripts----------------------------------*%!": "",
+    "test": "npx playwright test",
+    "visualComparison": "npx playwright test tests/FE/examples/visualComparison.spec.js",
+    "test-SingleFile": "npx playwright test tests/FE/examples/wiktionary.spec.js --headed",
+    "!%*----------------------------------API Testing----------------------------------*%!": "",
+    "BE": "npx playwright test --config=./configFiles/BE/BE.config.js",
+    "!%*-----------------------------Executing on Testing Platforms(Moon/BrowserStack/BrowserStack-Local)---------------------------------------*%!": "",
+    "test-BrowserStack": "npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStack.config.js",
+    "test-BrowserStack-Local": "npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStackLocal.config.js",
+    "test-Moon": "npx playwright test --config=./configFiles/FE/Moon/Moon.config.js",
+    "test-LocalBrowsers": "npx playwright test tests/FE/examples/wiktionary.spec.js --config=./configFiles/FE/LocalBrowsers/LocalBrowsers.config.js",
+    "---------------------------------Devices (Emulation or Real Android)---------------------------": "",
+    "test-RealAndroid": "npx playwright test --config=./configFiles/FE/RealAndroidDevices/RealAndroid.config.js",
+    "test-MobileEmulation": "npx playwright test --config=./configFiles/FE/MobileDeviceEmulation/MobileDevices.config.js",
+    "%*----------------------------------Reporting and Sonar Analysis----------------------------------*%": "%*-----Reporting and Sonar Analysis------*%",
+    "Open-PW-HTML-report": "playwright show-report reports/htmlReport",
+    "Generate-Allure-Report": "allure generate reports/allure-results -o reports/allure-report --clean",
+    "Open-Allure-Report": "allure open reports/allure-report",
+    "sonarAnalysis": "sonar-scanner",
+    "!%*----------------------------------Miscellanious CLI Options----------------------------------*%!": "!%*---Jenkins Options for BrowserStack and Moon------*%!",
+    "test-Android-Project": "npx playwright test --project='Android-Beta-BrowserStack'",
+    "test-Firefox-Project": "npx playwright test tests/FE/examples/wiktionary.spec.js --project=firefox",
+    "test-BrowserStack-Chrome-Project": "npx playwright test tests/FE/examples/wiktionary.spec.js --config=./configFiles/Jenkins/BrowserStack-jenkins.config.js --project='chrome@latest-beta:OSX Big Sur@browserstack'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@tools.adidas-group.com:7999/te/seed-tas-playwright-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "~1.37.1",
+    "@reportportal/agent-js-playwright": "^5.0.8",
+    "allure-commandline": "^2.18.1",
+    "allure-playwright": "^2.0.0-beta.19",
+    "browserstack-local": "^1.5.1",
+    "dotenv": "^16.0.3"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "playwright": "~1.37.1",
+    "readline": "^1.3.0",
+    "sonarqube-scanner": "^2.8.2"
+  }
+}

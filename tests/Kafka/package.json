@@ -1,0 +1,29 @@
+{
+  "name": "seed-tas-playwright-js",
+  "version": "23.09.14",
+  "description": "adidas Playwright seed - Kafka tests subdirecyory",
+  "main": "index.js",
+  "scripts": {
+    "test-Local": "npx playwright test tests/kafka-BatchConsumer.spec.js tests/kafka-SimpleExample.spec.js",
+    "%*----------------------------------Reporting and Sonar Analysis----------------------------------*%": "%*-----Reporting and Sonar Analysis------*%",
+    "Open-PW-HTML-report": "npx playwright show-report reports/htmlReport",
+    "Generate-Allure-Report": "allure generate reports/allure-results -o reports/allure-report --clean",
+    "Open-Allure-Report": "allure open reports/allure-report",
+    "sonarAnalysis": "sonar-scanner"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chance": "^1.1.11",
+    "kafkajs": "^2.2.4",
+    "sonarqube-scanner": "^3.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "~1.31.1",
+    "@reportportal/agent-js-playwright": "^5.1.2",
+    "allure-commandline": "^2.18.1",
+    "allure-playwright": "^2.0.0-beta.19",
+    "testcontainers": "^9.9.1"
+  }
+}
