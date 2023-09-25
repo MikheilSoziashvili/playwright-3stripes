@@ -2,14 +2,14 @@
 
 @Library(['GlobalJenkinsLibrary@master', 'TaaSWrapper@master']) _
 
-def svc_credentials = "svc_testautomation"                                                        //UPDATE AS REQUIRED
-def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       //DO NOT MODIFY
-def xrayImportOutput = "reports/xray-response.json"                                               //DO NOT MODIFY
-def xrayImportHeader = "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache'"         //DO NOT MODIFY
-def rpCredentials = "test-reporting-portal-pea-test_engineering"                                  //UPDATE AS REQUIRED
-def rpUrl = "https://testreportingportal.tools.3stripes.net"                                      //DO NOT MODIFY
-def projectName = "te-seed-tas-playwright-js"                                                     //UPDATE AS REQUIRED
-def email = "pea.test_engineering@adidas.com"                                                     //UPDATE AS REQUIRED
+def svc_credentials = "213c254f-80e8-4480-927f-e234dd44423c"                                                      
+def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       
+def xrayImportOutput = "reports/xray-response.json"                                               
+def xrayImportHeader = "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache'"         
+def rpCredentials = "cae34d84-365c-45b8-8019-2933ecf78f18"                                  
+def rpUrl = "https://testreportingportal.tools.3stripes.net"                                      
+def projectName = "oneplfr-qa-playwright"                                                     
+def email = "mikheil.soziashvili@externals.adidas.com"                                                     
 
 def jiraEnvironment = "PROD"                                                                      //UPDATE ACCORDING TO YOUR NEEDS
 def jiraSummary = "Test Plan $params.TEST_PLAN_KEY execution"                                    //UPDATE ACCORDING TO YOUR NEEDS
@@ -21,8 +21,8 @@ pipeline {
         ENV = tools.git.getSimplifiedBranchName()                               //Do not modify
         BUILD = "${BUILD_NUMBER}"                                               //Do not modify
         CI = true                                                               //Do not modify
-        RP_TOKEN = credentials('test-reporting-portal-pea-test_engineering')    //UPDATE AS REQUIRED
-        RP_PROJECT = 'te-seed-tas-playwright-js'                                //UPDATE AS REQUIRED
+        // RP_TOKEN = credentials('test-reporting-portal-pea-test_engineering')    //UPDATE AS REQUIRED
+        // RP_PROJECT = 'te-seed-tas-playwright-js'                                //UPDATE AS REQUIRED
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
         WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
         BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
