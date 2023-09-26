@@ -21,8 +21,8 @@ pipeline {
         ENV = tools.git.getSimplifiedBranchName()                               //Do not modify
         BUILD = "${BUILD_NUMBER}"                                               //Do not modify
         CI = true                                                               //Do not modify
-        // RP_TOKEN = credentials('test-reporting-portal-pea-test_engineering')    //UPDATE AS REQUIRED
-        // RP_PROJECT = 'te-seed-tas-playwright-js'                                //UPDATE AS REQUIRED
+        RP_TOKEN = credentials('soziamik')    //UPDATE AS REQUIRED
+        RP_PROJECT = 'mikheil_soziashvili_personal'                               
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
         WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
         BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
