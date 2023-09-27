@@ -24,10 +24,10 @@ pipeline {
         RP_TOKEN = credentials('soziamik')    //UPDATE AS REQUIRED
         RP_PROJECT = 'mikheil_soziashvili_personal'                               
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
-        WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
-        BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
-        BROWSERSTACK_ACCESS_KEY = credentials("peatestengineeri1")              //UPDATE AS REQUIRED
-        BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
+        // WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
+        // BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
+        // BROWSERSTACK_ACCESS_KEY = credentials("peatestengineeri1")              //UPDATE AS REQUIRED
+        // BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
     }
     parameters{
