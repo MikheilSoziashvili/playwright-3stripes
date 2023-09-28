@@ -6,7 +6,7 @@ def svc_credentials = "213c254f-80e8-4480-927f-e234dd44423c"
 def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       
 def xrayImportOutput = "reports/xray-response.json"                                               
 def xrayImportHeader = "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache'"         
-def rpCredentials = "cae34d84-365c-45b8-8019-2933ecf78f18"                                  
+def rpCredentials = "soziamik"                                  
 def rpUrl = "https://testreportingportal.tools.3stripes.net"                                      
 def projectName = "oneplfr-qa-playwright"                                                     
 def email = "mikheil.soziashvili@externals.adidas.com"                                                     
@@ -24,10 +24,10 @@ pipeline {
         RP_TOKEN = credentials('soziamik')    //UPDATE AS REQUIRED
         RP_PROJECT = 'mikheil_soziashvili_personal'                               
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
-        // WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
-        // BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
-        // BROWSERSTACK_ACCESS_KEY = credentials("peatestengineeri1")              //UPDATE AS REQUIRED
-        // BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
+        WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
+        BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
+        BROWSERSTACK_ACCESS_KEY = credentials("peatestengineeri1")              //UPDATE AS REQUIRED
+        BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
     }
     parameters{
