@@ -7,7 +7,7 @@ const { WiktionaryPage } = require('../pageObjects/WiktionaryPage');            
 const { TODO_ITEMS, todo_definition_map } = require("../../../test-data/wiktionary-test-data");         /** Importing Test Data */
 
 /**Annotations added- @TED-24886 */
-test.describe('Wiktionary FE Test @FE @TED-24886', () => {
+test.describe('Wiktionary FE Test @FE @ONEPLFR-168', () => {
 
     let wiktionaryPage;
 
