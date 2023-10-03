@@ -2,7 +2,7 @@
 
 @Library(['GlobalJenkinsLibrary@master']) _
 
-def svc_credentials = "213c254f-80e8-4480-927f-e234dd44423c"                                                      
+def svc_credentials = "svc_oneplfr"                                                      
 def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       
 def xrayImportOutput = "reports/xray-response.json"                                               
 def xrayImportHeader = "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache'"         
