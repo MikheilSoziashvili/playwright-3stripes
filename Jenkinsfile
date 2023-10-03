@@ -113,8 +113,8 @@ pipeline {
                 script {
                     allure results: [[path: 'reports/allure-results']]
                     report.playwright([dir: 'reports/htmlReport'])
-                    withCredentials([string(credentialsId: rpCredentials, variable: 'token')]) {
-                        reportingPortalReport = report.linkToRp([projectName: projectName, rpToken: token, rpUrl: rpUrl])
+                    withCredentials([string(credentialsId: rpCredentials, variable: 'apiKey')]) {
+                        reportingPortalReport = report.linkToRp([projectName: projectName, rpToken: apiKey, rpUrl: rpUrl])
                     }
                 }
             }
