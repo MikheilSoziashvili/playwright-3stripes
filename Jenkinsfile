@@ -6,7 +6,7 @@ def svc_credentials = "svc_oneplfr"
 def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       
 def xrayImportOutput = "reports/xray-response.json"                                               
 def xrayImportHeader = "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache'"         
-def rpCredentials = "soziamik"                                  
+def rpCredentials = "rp_soziamik"                                  
 def rpUrl = "https://testreportingportal.tools.3stripes.net"                                      
 def projectName = "oneplfr-qa-playwright"                                                     
 def email = "mikheil.soziashvili@externals.adidas.com"                                                     
@@ -21,7 +21,7 @@ pipeline {
         ENV = tools.git.getSimplifiedBranchName()                               //Do not modify
         BUILD = "${BUILD_NUMBER}"                                               //Do not modify
         CI = true                                                               //Do not modify
-        RP_TOKEN = credentials('soziamik')    //UPDATE AS REQUIRED
+        RP_TOKEN = credentials('rp_soziamik')    //UPDATE AS REQUIRED
         RP_PROJECT = 'mikheil_soziashvili_personal'                               
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
         // WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
