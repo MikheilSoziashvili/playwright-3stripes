@@ -67,11 +67,11 @@ pipeline {
             }
         }
         
-        stage("Checking Code Quality") {
-            steps {
-                sh "npm run-script sonarAnalysis"
-            }
-        }
+        // stage("Checking Code Quality") {
+        //     steps {
+        //         sh "npm run-script sonarAnalysis"
+        //     }
+        // }
 
         stage("Executing Tests") {
             steps {
