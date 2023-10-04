@@ -67,11 +67,11 @@ pipeline {
             }
         }
         
-        // stage("Checking Code Quality") {
-        //     steps {
-        //         sh "npm run-script sonarAnalysis"
-        //     }
-        // }
+        stage("Checking Code Quality") {
+            steps {
+                sh "npm run-script sonarAnalysis"
+            }
+        }
 
         stage("Executing Tests") {
             steps {
@@ -85,7 +85,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: svc_credentials, passwordVariable: "password", usernameVariable: "username")]) {
-                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' -u ${username}@emea.adsint.biz:${password} --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
+                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' -u ${username}@emea.adsint.biz:${password} --form"// 'file=@reports/junit.xml' -o ${xrayImportOutput}"
                     }
                     //Getting created execution key
                     def props = readJSON file: xrayImportOutput
