@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-@Library(['GlobalJenkinsLibrary@master']) _
+@Library(['GlobalJenkinsLibrary@master', 'TaaSWrapper@master']) _
 
 def svc_credentials = "svc_oneplfr"                                                      
 def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       
