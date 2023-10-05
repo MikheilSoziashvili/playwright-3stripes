@@ -87,6 +87,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: svc_credentials, passwordVariable: "password", usernameVariable: "username")]) {
                         sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' -u ${username}@emea.adsint.biz:${password} --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
                     }
+                    sh "cat reports/xray-response.json"
                     //Getting created execution key
                     def props = readJSON file: xrayImportOutput
                     def executionKey = props.testExecIssue.key
