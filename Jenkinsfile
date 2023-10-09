@@ -109,7 +109,7 @@ pipeline {
             }
         }
 
-         age("Publishing Reports") {
+         stage("Publishing Reports") {
             steps {
                 script {
                     allure([
