@@ -100,7 +100,7 @@ pipeline {
                         //Linking Test Plan and Test Execution
                         def url = 'https://jira.tools.3stripes.net/rest/raven/1.0/api/testplan/' + params.TEST_PLAN_KEY + '/testexecution'
                         def data = '@reports/data.json'
-                        sh "curl -X POST ${url} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d ${data}"
+                        sh "curl -X POST ${url} ${xrayImportHeader} -u ${username}@emea.adsint.biz:${password} -d ${data}"
                         //Editing Test Execution attributes example
                         def urlExecution = 'https://jira.tools.3stripes.net/rest/api/2/issue/' + executionKey
                         sh "curl -X PUT ${urlExecution} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
