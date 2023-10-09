@@ -109,10 +109,16 @@ pipeline {
             }
         }
 
-        stage("Publishing Reports") {
+         age("Publishing Reports") {
             steps {
                 script {
-                    allure results: [[path: 'reports/allure-results']]
+                    allure([
+                    includeProperties: false,
+                    jdk: '',
+                    properties: [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results: [[path: 'reports/allure-results']]
+                ])
                     report.playwright([dir: 'reports/htmlReport'])
                     withCredentials([string(credentialsId: rpCredentials, variable: 'token')]) {
                         reportingPortalReport = report.linkToRp([projectName: projectName, rpToken: token, rpUrl: rpUrl])
