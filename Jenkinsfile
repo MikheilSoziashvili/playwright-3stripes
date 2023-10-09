@@ -84,8 +84,8 @@ pipeline {
         stage("Exporting Test Results") { 
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: svc_credentials, passwordVariable: "password", usernameVariable: "username")]) {
-                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' -u ${username}@emea.adsint.biz:${password} --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
+                    withCredentials([string(credentialsId: svc_credentials, variable: 'token')]) {
+                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' --header 'Authorization: Bearer ${token}' --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
                     }
                     sh "cat reports/xray-response.json"
                     //Getting created execution key
@@ -96,14 +96,14 @@ pipeline {
                     //Creating json data for Xray
                     sh "echo '{\"add\": [\"$executionKey\"]}' > reports/data.json"
 
-                    withCredentials([usernamePassword(credentialsId: svc_credentials, passwordVariable: "password", usernameVariable: "username")]) {
+                    withCredentials([string(credentialsId: svc_credentials, variable: 'token')]) {
                         //Linking Test Plan and Test Execution
                         def url = 'https://jira.tools.3stripes.net/rest/raven/1.0/api/testplan/' + params.TEST_PLAN_KEY + '/testexecution'
                         def data = '@reports/data.json'
                         sh "curl -X POST ${url} ${xrayImportHeader} -u ${username}@emea.adsint.biz:${password} -d ${data}"
                         //Editing Test Execution attributes example
                         def urlExecution = 'https://jira.tools.3stripes.net/rest/api/2/issue/' + executionKey
-                        sh "curl -X PUT ${urlExecution} ${xrayImportHeader} -u ${username}@emea.adsint.biz:${password} -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
+                        sh "curl -X PUT ${urlExecution} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
                     }
                 }
             }
