@@ -32,7 +32,7 @@ pipeline {
     }
     parameters{
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH_NAME', type: 'PT_BRANCH'
-        string(name: 'PROJECT_KEY', defaultValue: '', description: '*Mandatory!! - Your project key')
+        string(name: 'PROJECT_KEY', defaultValue: 'ONEPLFR', description: '*Mandatory!! - Your project key')
         string(name: 'TEST_PLAN_KEY', defaultValue: '', description: '*Mandatory!! - Test plan for executions and pushing the results')
         choice(name: 'COMMANDS', choices: [      
             'npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStack.config.js',
@@ -100,7 +100,7 @@ pipeline {
                         //Linking Test Plan and Test Execution
                         def url = 'https://jira.tools.3stripes.net/rest/raven/1.0/api/testplan/' + params.TEST_PLAN_KEY + '/testexecution'
                         def data = '@reports/data.json'
-                        sh "curl -X POST ${url} ${xrayImportHeader} -u ${username}@emea.adsint.biz:${password} -d ${data}"
+                        sh "curl -X POST ${url} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d ${data}"
                         //Editing Test Execution attributes example
                         def urlExecution = 'https://jira.tools.3stripes.net/rest/api/2/issue/' + executionKey
                         sh "curl -X PUT ${urlExecution} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
