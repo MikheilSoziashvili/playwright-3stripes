@@ -112,7 +112,7 @@ pipeline {
         stage("Publishing Reports") {
             steps {
                 script {
-                    allure includeProperties: false, jdk: '', results: [[path: 'reports/allure-results']]
+                    // allure includeProperties: false, jdk: '', results: [[path: 'reports/allure-results']]
                     report.playwright([dir: 'reports/htmlReport'])
                     withCredentials([string(credentialsId: rpCredentials, variable: 'token')]) {
                         reportingPortalReport = report.linkToRp([projectName: projectName, rpToken: token, rpUrl: rpUrl])
