@@ -24,15 +24,13 @@ pipeline {
         RP_TOKEN = credentials('rp_soziamik')    //UPDATE AS REQUIRED
         RP_PROJECT = 'mikheil_soziashvili_personal'                               
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
-        // WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
-        // BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
-        // BROWSERSTACK_ACCESS_KEY = credentials("peatestengineeri1")              //UPDATE AS REQUIRED
+        WEBHOOK_CREDENTIALS = credentials("svc_oneplfr")          
         BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
     }
     parameters{
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH_NAME', type: 'PT_BRANCH'
-        string(name: 'PROJECT_KEY', defaultValue: '', description: '*Mandatory!! - Your project key')
+        string(name: 'PROJECT_KEY', defaultValue: 'ONEPLFR', description: '*Mandatory!! - Your project key')
         string(name: 'TEST_PLAN_KEY', defaultValue: '', description: '*Mandatory!! - Test plan for executions and pushing the results')
         choice(name: 'COMMANDS', choices: [      
             'npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStack.config.js',
@@ -104,18 +102,6 @@ pipeline {
                         //Editing Test Execution attributes example
                         def urlExecution = 'https://jira.tools.3stripes.net/rest/api/2/issue/' + executionKey
                         sh "curl -X PUT ${urlExecution} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
-                    }
-                }
-            }
-        }
-
-        stage("Publishing Reports") {
-            steps {
-                script {
-                    allure results: [[path: 'reports/allure-results']]
-                    report.playwright([dir: 'reports/htmlReport'])
-                    withCredentials([string(credentialsId: rpCredentials, variable: 'token')]) {
-                        reportingPortalReport = report.linkToRp([projectName: projectName, rpToken: token, rpUrl: rpUrl])
                     }
                 }
             }
