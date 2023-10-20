@@ -27,6 +27,7 @@ pipeline {
         WEBHOOK_CREDENTIALS = credentials("svc_oneplfr")          
         BROWSERSTACK_LOCAL = false                                                
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
+        
     }
     parameters{
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH_NAME', type: 'PT_BRANCH'
@@ -74,8 +75,11 @@ pipeline {
         stage("Executing Tests") {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    sh buildCommand() 
+                    tools.aws.withMfaAuthentication('iamCredentials', 'mfaCredentials') {
+                        sh buildCommand()
+                    } 
                 }
+
             }
         }
 

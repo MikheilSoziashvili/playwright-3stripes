@@ -17,14 +17,14 @@ const reports = [
   ["list"],
   ["junit", { outputFile: "../../reports/junit.xml" }],
   ["html", { outputFolder: "../../reports/htmlReport", open: "never" }],
-  [
-    "allure-playwright",
-    {
-      detail: true, // set to false to hide before and after hooks
-      outputFolder: "reports/allure-results",
-      suiteTitle: true,
-    },
-  ],
+  // [
+  //   "allure-playwright",
+  //   {
+  //     detail: true, // set to false to hide before and after hooks
+  //     outputFolder: "reports/allure-results",
+  //     suiteTitle: true,
+  //   },
+  // ],
 ];
 const config = {
   testDir: "../../tests/BE",
