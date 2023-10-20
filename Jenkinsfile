@@ -74,11 +74,14 @@ pipeline {
 
         stage("Executing Tests") {
             steps {
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                script {
+                   catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                     tools.aws.withMfaAuthentication('iamCredentials', 'mfaCredentials') {
                         sh buildCommand()
-                    } 
+                    }
+                } 
                 }
+                
 
             }
         }
