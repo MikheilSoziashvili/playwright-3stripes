@@ -1,12 +1,12 @@
 #!/usr/bin/env groovy
 
-@Library(['GlobalJenkinsLibrary@master', 'TaaSWrapper@master']) _
+@Library(['GlobalJenkinsLibrary@master']) _
 
-def svc_credentials = "213c254f-80e8-4480-927f-e234dd44423c"                                                      
+def svc_credentials = "svc_oneplfr"                                                      
 def xrayImportUrl = "https://jira.tools.3stripes.net/rest/raven/1.0/import/execution/junit"       
 def xrayImportOutput = "reports/xray-response.json"                                               
 def xrayImportHeader = "-H 'Content-Type: application/json' -H 'Cache-Control: no-cache'"         
-def rpCredentials = "cae34d84-365c-45b8-8019-2933ecf78f18"                                  
+def rpCredentials = "rp_soziamik"                                  
 def rpUrl = "https://testreportingportal.tools.3stripes.net"                                      
 def projectName = "oneplfr-qa-playwright"                                                     
 def email = "mikheil.soziashvili@externals.adidas.com"                                                     
@@ -21,18 +21,16 @@ pipeline {
         ENV = tools.git.getSimplifiedBranchName()                               //Do not modify
         BUILD = "${BUILD_NUMBER}"                                               //Do not modify
         CI = true                                                               //Do not modify
-        // RP_TOKEN = credentials('test-reporting-portal-pea-test_engineering')    //UPDATE AS REQUIRED
-        // RP_PROJECT = 'te-seed-tas-playwright-js'                                //UPDATE AS REQUIRED
+        RP_TOKEN = credentials('rp_soziamik')    //UPDATE AS REQUIRED
+        RP_PROJECT = 'mikheil_soziashvili_personal'                               
         RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
-        WEBHOOK_CREDENTIALS = credentials("jenkins-teams-webhook-url")          //UPDATE AS REQUIRED
-        BROWSERSTACK_USERNAME = "peatestengineeri1"                             //UPDATE AS REQUIRED
-        BROWSERSTACK_ACCESS_KEY = credentials("peatestengineeri1")              //UPDATE AS REQUIRED
+        WEBHOOK_CREDENTIALS = credentials("svc_oneplfr")          
         BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
     }
     parameters{
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH_NAME', type: 'PT_BRANCH'
-        string(name: 'PROJECT_KEY', defaultValue: '', description: '*Mandatory!! - Your project key')
+        string(name: 'PROJECT_KEY', defaultValue: 'ONEPLFR', description: '*Mandatory!! - Your project key')
         string(name: 'TEST_PLAN_KEY', defaultValue: '', description: '*Mandatory!! - Test plan for executions and pushing the results')
         choice(name: 'COMMANDS', choices: [      
             'npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStack.config.js',
@@ -81,12 +79,13 @@ pipeline {
             }
         }
 
-        stage("Exporting Test Results") {
+        stage("Exporting Test Results") { 
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: svc_credentials, passwordVariable: "password", usernameVariable: "username")]) {
-                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' -u ${username}@emea.adsint.biz:${password} --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
+                    withCredentials([string(credentialsId: svc_credentials, variable: 'token')]) {
+                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' --header 'Authorization: Bearer ${token}' --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
                     }
+                    sh "cat reports/xray-response.json"
                     //Getting created execution key
                     def props = readJSON file: xrayImportOutput
                     def executionKey = props.testExecIssue.key
@@ -95,26 +94,14 @@ pipeline {
                     //Creating json data for Xray
                     sh "echo '{\"add\": [\"$executionKey\"]}' > reports/data.json"
 
-                    withCredentials([usernamePassword(credentialsId: svc_credentials, passwordVariable: "password", usernameVariable: "username")]) {
+                    withCredentials([string(credentialsId: svc_credentials, variable: 'token')]) {
                         //Linking Test Plan and Test Execution
                         def url = 'https://jira.tools.3stripes.net/rest/raven/1.0/api/testplan/' + params.TEST_PLAN_KEY + '/testexecution'
                         def data = '@reports/data.json'
-                        sh "curl -X POST ${url} ${xrayImportHeader} -u ${username}@emea.adsint.biz:${password} -d ${data}"
+                        sh "curl -X POST ${url} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d ${data}"
                         //Editing Test Execution attributes example
                         def urlExecution = 'https://jira.tools.3stripes.net/rest/api/2/issue/' + executionKey
-                        sh "curl -X PUT ${urlExecution} ${xrayImportHeader} -u ${username}@emea.adsint.biz:${password} -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
-                    }
-                }
-            }
-        }
-
-        stage("Publishing Reports") {
-            steps {
-                script {
-                    allure results: [[path: 'reports/allure-results']]
-                    report.playwright([dir: 'reports/htmlReport'])
-                    withCredentials([string(credentialsId: rpCredentials, variable: 'token')]) {
-                        reportingPortalReport = report.linkToRp([projectName: projectName, rpToken: token, rpUrl: rpUrl])
+                        sh "curl -X PUT ${urlExecution} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d  \"{ \\\"fields\\\": { \\\"customfield_11405\\\":[\\\"${jiraEnvironment}\\\"] , \\\"summary\\\":\\\"${jiraSummary}\\\"}}\""
                     }
                 }
             }

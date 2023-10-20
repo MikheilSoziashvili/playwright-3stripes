@@ -2,7 +2,6 @@ const { expect } = require("@playwright/test");
 
 class WiktionaryPage {
 
-    //Locators - Locator can be created with the page.locator(selector[, options]) method.
     constructor(page) {
         this.page = page;
         this.searchField = page.locator('#searchInput:visible'); //CSS - :visible only works with CSS
@@ -14,7 +13,6 @@ class WiktionaryPage {
         this.copyrightImage = page.locator('#footer-copyrightico > a > img');
         this.poweredbyImage = page.locator('#footer-poweredbyico > a > img');
     }
-
 
     async goto() {
         await this.page.goto('https://en.wiktionary.org/wiki/Wiktionary:Main_Page');

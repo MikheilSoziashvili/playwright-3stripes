@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "!%*----------------------------------Setup and Customization---------------------------*%!": "",
-    "preinstall": "node preinstall.js",
-    "postinstall": "node postinstall.js",
     "customize": "node customizeProject.js",
     "!%*----------------------------------Test Scripts----------------------------------*%!": "",
     "test": "npx playwright test",
