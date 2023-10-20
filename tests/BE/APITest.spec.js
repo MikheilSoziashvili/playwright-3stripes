@@ -2,7 +2,7 @@ const { test, expect, request } = require('@playwright/test');
 import { execSync } from 'child_process';
 import testDataBE from '../../test-data/test-data-for-be';
 
-test.describe('BE Test for data import @BE-All @TED-25836', () => {  
+test.describe('BE Test for data import @BE-All @ONEPLFR-168', () => {  
 
     test.use({
         baseURL: 'https://reqres.in'
