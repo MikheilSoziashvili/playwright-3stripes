@@ -11,21 +11,21 @@ def rpUrl = "https://testreportingportal.tools.3stripes.net"
 def projectName = "oneplfr-qa-playwright"                                                     
 def email = "mikheil.soziashvili@externals.adidas.com"                                                     
 
-def jiraEnvironment = "PROD"                                                                      //UPDATE ACCORDING TO YOUR NEEDS
-def jiraSummary = "Test Plan $params.TEST_PLAN_KEY execution"                                    //UPDATE ACCORDING TO YOUR NEEDS
+def jiraEnvironment = "PROD"                                                                      
+def jiraSummary = "Test Plan $params.TEST_PLAN_KEY execution"                                    
 
 pipeline {
     agent { label 'ubuntu_node-18_playwright' }
     environment {
-        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"                                  //Do not modify
-        ENV = tools.git.getSimplifiedBranchName()                               //Do not modify
-        BUILD = "${BUILD_NUMBER}"                                               //Do not modify
-        CI = true                                                               //Do not modify
-        RP_TOKEN = credentials('rp_soziamik')    //UPDATE AS REQUIRED
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"                                   
+        ENV = tools.git.getSimplifiedBranchName()                                
+        BUILD = "${BUILD_NUMBER}"                                                
+        CI = true                                                               
+        RP_TOKEN = credentials('rp_soziamik')      
         RP_PROJECT = 'mikheil_soziashvili_personal'                               
-        RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                            //Do not modify
+        RP_DESCRIPTION = "${JOB_URL}${BUILD_NUMBER}"                             
         WEBHOOK_CREDENTIALS = credentials("svc_oneplfr")          
-        BROWSERSTACK_LOCAL = false                                              //UPDATE AS REQUIRED
+        BROWSERSTACK_LOCAL = false                                                
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
     }
     parameters{
@@ -74,7 +74,9 @@ pipeline {
         stage("Executing Tests") {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                    tools.aws.withMfaAuthentication(awsCredentials, awsMfaCredentials) {
                     sh buildCommand()
+                    }
                 }
             }
         }
