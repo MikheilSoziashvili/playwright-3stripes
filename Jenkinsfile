@@ -31,7 +31,7 @@ pipeline {
     parameters{
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH_NAME', type: 'PT_BRANCH'
         string(name: 'PROJECT_KEY', defaultValue: 'ONEPLFR', description: '*Mandatory!! - Your project key')
-        string(name: 'TEST_PLAN_KEY', defaultValue: 'ONEPLFR-168', description: '*Mandatory!! - Test plan for executions and pushing the results')
+        string(name: 'TEST_PLAN_KEY', defaultValue: '', description: '*Mandatory!! - Test plan for executions and pushing the results')
         choice(name: 'COMMANDS', choices: [      
             'npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStack.config.js',
             'npx playwright test --config=./configFiles/FE/LocalBrowsers/LocalBrowsers.config.js',
