@@ -1,0 +1,6 @@
+namespace;leanxid;service;cost
+dev;1;serviceA;100.5
+dev;2;serviceA;200.7
+prod;3;serviceB;300.8
+prod;4;serviceB;150.2
+test;5;serviceC;50.0

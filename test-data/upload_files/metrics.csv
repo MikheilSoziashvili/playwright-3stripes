@@ -1,0 +1,6 @@
+namespace,leanxid,metric-name,value
+dev,1,CPU,75.5
+dev,2,CPU,65.7
+prod,3,Memory,40.8
+prod,4,Memory,50.2
+test,5,Disk,20.0
