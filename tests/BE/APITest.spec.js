@@ -25,7 +25,7 @@ test.describe('BE Test for data import @BE-All @ONEPLFR-168', () => {
             // process.env.$username
             // process.env.$password
             //  await expect(responseBody).toEqual(testDataBE.responseSingleExistingUser);
-            console.log(process.env.$VICTORIA_DB_URL)
+            console.log(process.env.$VICTORIA_DB)
         });
 
         await test.step('Remove object from S3', async () => {
