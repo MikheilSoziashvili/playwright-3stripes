@@ -81,9 +81,7 @@ pipeline {
                 script {
                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         tools.aws.withMfaAuthentication('aws_keys_oneplfr_account_dev', 'aws_mfa_oneplfr_account_dev') {
-                            sh 'VICTORIA_DB = "$VICTORIA_DB_URL" node APITest.spec.js'
-                            sh buildCommand()
-
+                            sh VICTORIA_DB = "$VICTORIA_DB_URL" node APITest.spec.js + ';'+ buildCommand()
                         }
                     } 
                 }
