@@ -1,0 +1,5 @@
+{
+  status: [32m'success'[39m,
+  isPartial: [33mfalse[39m,
+  data: { resultType: [32m'vector'[39m, result: [] }
+}

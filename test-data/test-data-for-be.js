@@ -14,5 +14,5 @@ const sucessfulResponse = {
     }
 }
 
-module.exports.testDataBE = testDataBE;
+module.exports = testDataBE;
 module.exports.sucessfulResponse = sucessfulResponse;

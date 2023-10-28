@@ -1,6 +1,6 @@
 const { test, expect, request } = require('@playwright/test');
 import { execSync } from 'child_process';
-import testDataBE from '../../test-data/test-data-for-be';
+import testDataBE, { sucessfulResponse } from '../../test-data/test-data-for-be';
 
 const apiUrl = process.env.VICTORIA_DB_URL;
 const headers = {
@@ -29,7 +29,8 @@ test.describe('BE Test for data import Plan @ONEPLFR-168', () => {
         const responseBody = await response.json();
 
         await test.step('Upload Object to S3', async () => {
-            execSync(uploadCommand, {encoding: 'utf-8'});
+            execSync(uploadCommand, {encoding: 'utf-8'})
+
         });
           
         await test.step('Check victoria metrics database', async () => {
