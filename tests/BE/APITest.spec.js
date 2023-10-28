@@ -10,11 +10,15 @@ const headers = {
 
 test.describe('BE Test for data import Plan @ONEPLFR-168', () => {  
 
+    test.use({
+        baseURL: apiUrl
+    })
+
     test('Test for Data import @BE-GET', async ({ request }) => {
         const uploadCommand = `aws s3api put-object --bucket '${testDataBE.AWS_S3_BUCKET}' --key '${testDataBE.AWS_S3_DESTINATION}' --body '${testDataBE.PATH_TO_UPLOAD_FILE}'`
         const deleteCommand = `aws s3api delete-object --bucket '${testDataBE.AWS_S3_BUCKET}' --key '${testDataBE.AWS_S3_DESTINATION}'`
        
-        const response = await request.get(apiUrl, {
+        const response = await request.get('', {
             headers: {
                 'api-key': headers['api-key'],
                 'Accept': 'application/json',
@@ -29,7 +33,8 @@ test.describe('BE Test for data import Plan @ONEPLFR-168', () => {
         });
           
         await test.step('Check victoria metrics database', async () => {
-            expect(responseBody).toEqual(testDataBE.successfulResponse)
+            expect(responseBody).toEqual(testDataBE.sucessfulResponse)
+
         });
 
         await test.step('Remove object from S3', async () => {
