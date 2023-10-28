@@ -5,4 +5,13 @@ const testDataBE = {
 	AWS_S3_DESTINATION: 'inbound/cost.csv'
 }
 
+const sucessfulResponse = {
+    "status": "success",
+    "isPartial": false,
+    "data": {
+        "resultType": "vector",
+        "result": []
+    }
+}
+
 module.exports = testDataBE;

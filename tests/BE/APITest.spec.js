@@ -29,7 +29,7 @@ test.describe('BE Test for data import Plan @ONEPLFR-168', () => {
         });
           
         await test.step('Check victoria metrics database', async () => {
-            await expect(responseBody).toBeOK()
+            expect(responseBody.ok()).toEqual(testDataBE.successfulResponse)
         });
 
         await test.step('Remove object from S3', async () => {
