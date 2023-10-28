@@ -4,17 +4,21 @@ import testDataBE, { sucessfulResponse } from '../../test-data/test-data-for-be'
 
 const apiUrl = process.env.VICTORIA_DB_URL;
 const headers = {
-    'Authorization': 'Basic ' + Buffer.from(`${process.env.VICTORIA_DB_USERNAME}`+ ":" + `${process.env.VICTORIA_DB_PASSWORD}`, 'utf-8').toString('base64'),
+    'Authorization': 'Basic ' + Buffer.from(process.env.VICTORIA_DB_USERNAME + ":" + process.env.VICTORIA_DB_PASSWORD, 'utf-8').toString('base64'),
     'api-key': process.env.VICTORIA_DB_APIKEY
 };
 
 test.describe('BE Test for data import Plan @ONEPLFR-168', () => {  
+    
+    test.use({
+        baseURL: apiUrl
+    })
 
     test('Test for Data import @BE-GET', async ({ request }) => {
         const uploadCommand = `aws s3api put-object --bucket '${testDataBE.AWS_S3_BUCKET}' --key '${testDataBE.AWS_S3_DESTINATION}' --body '${testDataBE.PATH_TO_UPLOAD_FILE}'`
         const deleteCommand = `aws s3api delete-object --bucket '${testDataBE.AWS_S3_BUCKET}' --key '${testDataBE.AWS_S3_DESTINATION}'`
        
-        const response = await request.get(apiUrl, {
+        const response = await request.get('', {
             headers: {
                 'api-key': headers['api-key'],
                 'Accept': 'application/json',
