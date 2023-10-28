@@ -10,15 +10,11 @@ const headers = {
 
 test.describe('BE Test for data import Plan @ONEPLFR-168', () => {  
 
-    test.use({
-        baseURL: apiUrl
-    })
-
     test('Test for Data import @BE-GET', async ({ request }) => {
         const uploadCommand = `aws s3api put-object --bucket '${testDataBE.AWS_S3_BUCKET}' --key '${testDataBE.AWS_S3_DESTINATION}' --body '${testDataBE.PATH_TO_UPLOAD_FILE}'`
         const deleteCommand = `aws s3api delete-object --bucket '${testDataBE.AWS_S3_BUCKET}' --key '${testDataBE.AWS_S3_DESTINATION}'`
        
-        const response = await request.get('', {
+        const response = await request.get(apiUrl, {
             headers: {
                 'api-key': headers['api-key'],
                 'Accept': 'application/json',
