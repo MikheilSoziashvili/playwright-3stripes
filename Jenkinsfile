@@ -27,7 +27,7 @@ pipeline {
         WEBHOOK_CREDENTIALS = credentials("svc_oneplfr")          
         BROWSERSTACK_LOCAL = false                                                
         PW_S3_FOLDER = "${JOB_NAME}-${BUILD_NUMBER}"
-        VICTORIA_DB_URL = credentials('oneplfrVictoriaDbUrl')
+        VICTORIA_DB_URL = credentials('VictoriaDbApiUrl')
         VICTORIA_DB_APIKEY = credentials('oneplfrVictoriaDbApiKey')
         VICTORIA_DB_USERNAME = credentials('oneplfrVictoriaDbUsername')
         VICTORIA_DB_PASSWORD = credentials('oneplfrVictoriaDbPassword')
