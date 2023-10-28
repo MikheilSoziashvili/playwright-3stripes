@@ -59,21 +59,17 @@ const config = {
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
-    actionTimeout: 9000 /* Base URL to use in actions like `await page.goto('/')`. */,
-    // baseURL: 'http://localhost:3000',
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+
+    actionTimeout: 9000,
     trace: "on-first-retry",
 
-    headless: process.env.CI ? true : false, //running headless in CI
+    headless: process.env.CI ? true : false,
 
-    screenshot: "only-on-failure", //Options - 'on','only-on-failure','off'
-    video: "retain-on-failure", //Options - "off"|"on"|"retain-on-failure"|"on-first-retry"
+    screenshot: "only-on-failure",
+    video: "off",
   },
 
-  /* Configure projects for major browsers */
   projects: [
-    /** Playwright Local browsers */
     {
       name: "chromium",
       use: {
@@ -92,7 +88,7 @@ const config = {
         ...devices["Desktop Safari"],
       },
     },
-    /** Browserstack browsers */
+
     {
       name: "chrome@latest:Windows 10@browserstack",
       use: {
