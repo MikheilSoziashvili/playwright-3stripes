@@ -30,7 +30,6 @@ test.describe('BE Test for data import Plan @ONEPLFR-168', () => {
 
         await test.step('Upload Object to S3', async () => {
             execSync(uploadCommand, {encoding: 'utf-8'})
-
         });
           
         await test.step('Check victoria metrics database', async () => {
