@@ -40,12 +40,12 @@ const config = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 16000,
+    timeout: 4000,
     //Visual Comparison
     toHaveScreenshot: { maxDiffPixels: 100 },
   },
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /** Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -60,13 +60,17 @@ const config = {
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
 
-    actionTimeout: 9000,
+    actionTimeout: 3000,
     trace: "on-first-retry",
 
     headless: process.env.CI ? true : false,
 
     screenshot: "only-on-failure",
     video: "off",
+
+    launchOptions: {
+      args: ["--start-maximized"]
+    }
   },
 
   projects: [

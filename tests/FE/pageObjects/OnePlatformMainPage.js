@@ -4,7 +4,7 @@ class OnePlatformMainPage {
 
     constructor(page) {
         this.page = page;
-        this.homeButton = this.page.locator('home-button')
+        this.homeButton = page.locator('#home-button')
 
         this.navbarMiddle = page.locator('nav > div.header__middle > div > ul > li');
 
@@ -16,15 +16,16 @@ class OnePlatformMainPage {
         this.catalog = this.navbarMiddle.locator('#menu-item-catalog');
         this.community = this.navbarMiddle.locator('#menu-item-community');
 
-        this.costs = this.page.locator('menu-item-costs');
-        this.ranking = this.page.locator('menu-item-ranking');
-        this.provisioning = this.page.locator('menu-item-provisioning');
+        this.costs = page.locator('#menu-item-costs');
+        this.ranking = page.locator('#menu-item-ranking');
+        this.provisioning = page.locator('#menu-item-provisioning');
 
-        this.onboarding = this.page.locator('menu-item-onboarding')
-        this.onboarding = this.page.locator('menu-item-tech-stack')
-        this.onboarding = this.page.locator('menu-item-templates')
+        this.onboarding = page.locator('#menu-item-onboarding')
+        this.techStack = page.locator('#menu-item-tech-stack')
+        this.templates = page.locator('#menu-item-templates')
 
-        this.searchButton = page.locator('#navbar-search-bar');
+        this.searchButtonNav = page.locator('#navbar-search-bar');
+        this.searchButton = page.locator('#search-bar')
     }
 
     async goto() {
@@ -41,65 +42,70 @@ class OnePlatformMainPage {
 
         for (let i = 0; i < navBarElements.length; i++) {
             await navBarElements[i].click();
-            await this.page.waitForNavigation();
         
             expect(this.page.url().endsWith(addresses[i])).toBeTruthy();
 
             await this.homeButton.click();
-            await this.page.waitForNavigation();
         }
     }
 
     async checkUnderMyApplications() {
         const addresses = ['/costs', '/ranking', '/provisioning']
         const navBarElements = [this.costs, this.ranking, this.provisioning]
+        await this.myApplications.click()
 
         for (let i = 0; i < navBarElements.length; i++) {
             await navBarElements[i].click();
-            await this.page.waitForNavigation();
         
-            expect(this.page.url().endsWith('/my-applications' + addresses[i])).toBeTruthy();
-
+            expect(this.page.url().endsWith(addresses[i])).toBeTruthy();
             await this.homeButton.click();
-            await this.page.waitForNavigation();
         }
     }
 
     async checkUnderLearningBase() {
         const addresses = ['/onboarding', '/tech-stack', '/templates']
-        const navBarElements = [this.costs, this.ranking, this.provisioning]
+        const navBarElements = [this.onboarding, this.techStack, this.templates]
+        await this.learningBase.click()
 
         for (let i = 0; i < navBarElements.length; i++) {
             await navBarElements[i].click();
-            await this.page.waitForNavigation();
         
-            expect(this.page.url().endsWith('/learning-base' + addresses[i])).toBeTruthy();
-
+            expect(this.page.url().endsWith(addresses[i])).toBeTruthy();
             await this.homeButton.click();
-            await this.page.waitForNavigation();
         }
     }
 
-    async hoverSwitchCheck(navBarElement) {
-        if (navBarElement == this.myApplications.textContent()) {
-            await this.myApplications.click()
-            expect(this.costs).toBeVisible()
+    async hoverOverLearning() {
+            await this.myApplications.click();
+            expect(this.costs).toBeVisible();
 
-            await this.learningBase.hover()
-            await this.learningBase.waitForSelector()
+            await this.learningBase.hover();
             
-            expect(this.costs).toBeVisible()
-        } else if (navBarElement == this.learningBase.textContent()) {
-            await this.learningBase.click()
-            expect(this.onboarding).toBeVisible()
-
-            await this.myApplications.hover()
-            await this.myApplications.waitForSelector()
-        
-            expect(this.onboarding).toBeVisible()
-        }
+            expect(this.costs).toBeVisible(); 
+            await this.homeButton.click()
     }
 
-    
+    async hoverOverApplications() {
+        await this.learningBase.click()
+        expect(this.onboarding).toBeVisible()
+
+        await this.myApplications.hover()
+        
+        expect(this.onboarding).toBeVisible()
+        await this.homeButton.click()
+    }
+
+    async visibilityOfSearch() {
+        expect(this.searchButtonNav).not.toBeVisible();
+        expect(this.searchButton).toBeVisible();
+        await this.myApplications.click();
+        expect(this.searchButtonNav).toBeVisible();
+        expect(this.searchButton).toBeVisible();
+    }
+
+    async functionalityOfNavSearch() {
+
+    }
+
 }
 module.exports = { OnePlatformMainPage };
