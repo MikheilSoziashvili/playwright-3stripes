@@ -1,6 +1,6 @@
 const { test, expect, request } = require('@playwright/test');
 import { execSync } from 'child_process';
-import testDataBE, { sucessfulResponse } from '../../../test-data/test-data-for-be';
+import testDataBE, { sucessfulResponse } from '../../../test-data/test-data-for-be'; //new tests file
 
 const apiUrl = process.env.VICTORIA_DB_URL;
 const headers = {
