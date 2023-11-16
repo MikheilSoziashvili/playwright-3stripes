@@ -81,7 +81,7 @@ class OnePlatformMainPage {
 
             await this.learningBase.hover();
             
-            expect(this.costs).toBeVisible(); 
+            expect(this.onboarding).toBeVisible(); 
             await this.homeButton.click()
     }
 
@@ -91,7 +91,7 @@ class OnePlatformMainPage {
 
         await this.myApplications.hover()
         
-        expect(this.onboarding).toBeVisible()
+        expect(this.costs).toBeVisible()
         await this.homeButton.click()
     }
 
