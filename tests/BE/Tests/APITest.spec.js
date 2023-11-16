@@ -8,7 +8,7 @@ const headers = {
     'api-key': process.env.VICTORIA_DB_APIKEY
 };
 
-test.describe('BE Test for data import Plan @ONEPLFR-168', () => {  
+test.describe('BE Test for data import Plan @ONEPLFR-322', () => {  
     
     test.use({
         baseURL: apiUrl
