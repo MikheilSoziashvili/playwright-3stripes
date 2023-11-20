@@ -31,6 +31,8 @@ pipeline {
         VICTORIA_DB_APIKEY = credentials('oneplfrVictoriaDbApiKey')
         VICTORIA_DB_USERNAME = credentials('oneplfrVictoriaDbUsername')
         VICTORIA_DB_PASSWORD = credentials('oneplfrVictoriaDbPassword')
+        DEV_API_URL = credentials('oneplfrDevApiUrl')
+        DEV_API_KEY = credentials('oneplfrDevApiKey')
     }
 
     parameters {
