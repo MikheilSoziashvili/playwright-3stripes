@@ -14,7 +14,8 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()      
           
-        await expect(response).toBeOk()
+        await expect(response.ok()).toBeTruthy()
+        
         await expect(responseBody).toEqual(testDataForMetricsExpose.positiveResponse)
     })
 
@@ -25,7 +26,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
 
-        // await expect(response).not.toBeOk()
+        // await expect(response.ok()).toBeFalsy()
         // await expect(responseBody).toEqual(testDataForMetricsExpose.errorResponseNone)
     })
 
@@ -36,7 +37,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
 
-        // await expect(response).not.toBeOk()
+        // await expect(response.ok()).toBeFalsy()
         // await expect(responseBody).toEqual(testDataForMetricsExpose.errorResponseWrong)
     })
 
@@ -46,7 +47,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
 
-        // await expect(response).not.toBeOk()
+        // await expect(response.ok()).toBeFalsy()
         // await expect(responseBody).toEqual()  //Will update after resolving current defect
     })
 
@@ -57,7 +58,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
 
-        // await expect(response).not.toBeOk()
+        // await expect(response.ok()).toBeFalsy()
         // await expect(responseBody).toEqual()  //Will update after resolving current defect
     })
 
@@ -68,7 +69,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
         
-        // await expect(response).not.toBeOk()
+        // await expect(response.ok()).toBeFalsy()
         // await expect(responseBody).toEqual()  //Will update after resolving current defect
     })
 
@@ -79,7 +80,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
 
-        // await expect(response).not.toBeOk()
+        await expect(response.ok()).toBeFalsy()
         // await expect(responseBody).toEqual()  //Will update after resolving current defect
     })
 
@@ -90,7 +91,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         })
         const responseBody = await response.json()
 
-        // await expect(response).toBeOk()
+        await expect(response.ok()).toBeTruthy()
         // await expect(responseBody).toEqual()  //Will update after resolving current defect
     })
 })
