@@ -1,12 +1,8 @@
 const { test, expect, request } = require('@playwright/test');
 import { execSync } from 'child_process';
-import testDataBE, { sucessfulResponse } from '../../../test-data/test-data-for-be'; //new tests file
+import { sucessfulResponse, testDataBE, apiUrl, headers} from '../../../test-data/test-data-for-data-import';
 
-const apiUrl = process.env.VICTORIA_DB_URL;
-const headers = {
-    'Authorization': 'Basic ' + Buffer.from(process.env.VICTORIA_DB_USERNAME + ":" + process.env.VICTORIA_DB_PASSWORD, 'utf-8').toString('base64'),
-    'api-key': process.env.VICTORIA_DB_APIKEY
-};
+
 
 test.describe('BE Test for data import Plan @ONEPLFR-322', () => {  
     
@@ -33,7 +29,7 @@ test.describe('BE Test for data import Plan @ONEPLFR-322', () => {
         });
           
         await test.step('Check victoria metrics database', async () => {
-            expect(responseBody).toEqual(testDataBE.sucessfulResponse)
+            expect(responseBody).toEqual(sucessfulResponse)
 
         });
 
