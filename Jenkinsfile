@@ -81,7 +81,6 @@ pipeline {
                 script {
                    catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                         tools.aws.withMfaAuthentication('aws_keys_oneplfr_account_dev', 'aws_mfa_oneplfr_account_dev') {
-                            sh "npx playwright install-deps"
                             sh buildCommand()
                         }
                     } 
