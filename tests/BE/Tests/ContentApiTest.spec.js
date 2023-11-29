@@ -1,49 +1,48 @@
 const { test, expect, request } = require('@playwright/test');
-import * as testDataForMetricsExpose from '../../../test-data/test-data-for-metrics-expose-endpoint';
+import * as testDataForContent from '../../../test-data/test-data-for-content-endpoint';
 
 test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
     
     test.use({
-        baseURL: testDataForMetricsExpose.apiUrl
+        baseURL: testDataForContent.apiUrl
     })
 
     test('Successful request', async ({request}) => {
         const response = await request.get('', {
-            headers: testDataForMetricsExpose.headerWithApiKey,
-            params: testDataForMetricsExpose.paramsBody
+            headers: testDataForContent.headerWithApiKey
         })
         const responseBody = await response.json()      
           
         await expect(response.ok()).toBeTruthy()
         
-        await expect(responseBody).toEqual(testDataForMetricsExpose.positiveResponse)
+        await expect(jsonPath(responseBody, "$.url")).to
     })
 
     test('Request without Api Key header', async ({request}) => {
         const response = await request.get('', {
-            headers: testDataForMetricsExpose.headerWithoutApiKey,
-            params: testDataForMetricsExpose.paramsBody
+            headers: testDataForContent.headerWithoutApiKey,
+            params: testDataForContent.paramsBody
         })
         const responseBody = await response.json()
 
         // await expect(response.ok()).toBeFalsy()
-        // await expect(responseBody).toEqual(testDataForMetricsExpose.errorResponseNone)
+        // await expect(responseBody).toEqual(testDataForContent.errorResponseNone)
     })
 
     test('Request with wrong Api Key header', async ({request}) => {
         const response = await request.get('', {
-            headers: testDataForMetricsExpose.headerWithWrongApiKey,
-            params: testDataForMetricsExpose.paramsBody
+            headers: testDataForContent.headerWithWrongApiKey,
+            params: testDataForContent.paramsBody
         })
         const responseBody = await response.json()
 
         // await expect(response.ok()).toBeFalsy()
-        // await expect(responseBody).toEqual(testDataForMetricsExpose.errorResponseWrong)
+        // await expect(responseBody).toEqual(testDataForContent.errorResponseWrong)
     })
 
     test('Request without parameters', async ({request}) => {
         const response = await request.get('', {
-            headers: testDataForMetricsExpose.headerWithWrongApiKey
+            headers: testDataForContent.headerWithWrongApiKey
         })
         const responseBody = await response.json()
 
@@ -53,8 +52,8 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
 
     test('Request with only date', async ({request}) => {
         const response = await request.get('', {
-            headerWithApiKey: testDataForMetricsExpose.headerWithApiKey,
-            params: testDataForMetricsExpose.paramsBody['date']
+            headerWithApiKey: testDataForContent.headerWithApiKey,
+            params: testDataForContent.paramsBody['date']
         })
         const responseBody = await response.json()
 
@@ -64,8 +63,8 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
 
     test('Request with only leanIxId', async ({request}) => {
         const response = await request.get('', {
-            headerWithApiKey: testDataForMetricsExpose.headerWithApiKey,
-            params: testDataForMetricsExpose.paramsBody['leanIxId']
+            headerWithApiKey: testDataForContent.headerWithApiKey,
+            params: testDataForContent.paramsBody['leanIxId']
         })
         const responseBody = await response.json()
         
@@ -75,8 +74,8 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
 
     test('Request with different Content-Type', async ({request}) => {
         const response = await request.get('', {
-            headerWithDifferentContentType: testDataForMetricsExpose.headerWithDifferentContentType, 
-            params: testDataForMetricsExpose.paramsBody
+            headerWithDifferentContentType: testDataForContent.headerWithDifferentContentType, 
+            params: testDataForContent.paramsBody
         })
         const responseBody = await response.json()
 
@@ -86,8 +85,8 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
 
     test('Request with different values', async ({request}) => {
         const response = await request.get('', {
-            headerWithApiKey: testDataForMetricsExpose.headerWithApiKey, 
-            params: testDataForMetricsExpose.paramsBodyDifferent
+            headerWithApiKey: testDataForContent.headerWithApiKey, 
+            params: testDataForContent.paramsBodyDifferent
         })
         const responseBody = await response.json()
 
