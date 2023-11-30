@@ -5,17 +5,37 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
     
     test.use({
         baseURL: testDataForContent.apiUrl,
-        // headers: testDataForContent.headerWithApiKey
     })
 
-    test('Successful request', async ({request}) => {
+    test('Successful request, also Validating The response', async ({request}) => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithApiKey
-        })      
+        })    
+        const presignedUrl = JSON.parse((await response.body()).toString())
           
         await expect(response.ok()).toBeTruthy();
-        const presignedUrl = JSON.parse((await response.body()).toString())
-        console.log(presignedUrl.url)
-        // await expect(response.json().url).toContain(".s3.eu-central-1.amazonaws.com");
+        await expect(presignedUrl).toContain(testDataForContent.positiveResponse)
     })
+
+    test('Request without Api Key header', async ({request}) => {
+        const response = await request.get('', {
+            headers: testDataForContent.headerWithoutApiKey,
+        })
+        const message = JSON.parse((await response.body()).toString())
+        
+        await expect(response.status()).toBe(401)
+        await expect(message).toContain(testDataForContent.errorResponseNone)
+    })
+
+    test('Request with wrong Api Key header', async ({request}) => {
+        const response = await request.get('', {
+            headers: testDataForContent.headerWithWrongApiKey,
+        })
+        const message = JSON.parse((await response.body()).toString())
+
+        await expect(response.status()).toBe(401)
+        await expect(message).toEqual(testDataForContent.errorResponseWrong)
+    })
+
+    
 })

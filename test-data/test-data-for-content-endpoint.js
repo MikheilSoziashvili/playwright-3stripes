@@ -15,22 +15,11 @@ const headerWithWrongApiKey = {
     'Api-Key': 'wrongApiKey'
 }
 
-const headerWithDifferentContentType = {
-    'Content-Type': 'application/xml',
-    'Api-Key': 'wrongApiKey'
-}
+const positiveResponse = "https://oneplfr-platforms-content-dev.s3.eu-central-1.amazonaws.com"
 
-const positiveResponse = {
-    "url": ""
-}
+const errorResponseWrong = "Invalid authentication credentials"
 
-const errorResponseWrong = {
-    "message": "Invalid authentication credentials"
-}
-
-const errorResponseNone = {
-    "message": "No API key found in request"
-}
+const errorResponseNone = "No API key found in request"
 
 const validFileContent = {
 
@@ -39,7 +28,6 @@ const validFileContent = {
 module.exports.apiUrl = apiUrl
 module.exports.headerWithApiKey = headerWithApiKey
 module.exports.headerWithoutApiKey = headerWithoutApiKey
-module.exports.headerWithDifferentContentType = headerWithDifferentContentType
 module.exports.headerWithWrongApiKey = headerWithWrongApiKey
 module.exports.positiveResponse = positiveResponse
 module.exports.errorResponseNone = errorResponseNone
