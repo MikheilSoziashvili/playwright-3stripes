@@ -11,31 +11,29 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithApiKey
         })    
-        const presignedUrl = JSON.parse((await response.body()).toString())
+        const responseBody = JSON.parse((await response.body()).toString())
           
         await expect(response.ok()).toBeTruthy();
-        await expect(presignedUrl).toContain(testDataForContent.positiveResponse)
+        await expect(responseBody.url).toContain(testDataForContent.positiveResponse)
     })
 
     test('Request without Api Key header', async ({request}) => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithoutApiKey,
         })
-        const message = JSON.parse((await response.body()).toString())
+        const responseBody = JSON.parse((await response.body()).toString())
         
         await expect(response.status()).toBe(401)
-        await expect(message).toContain(testDataForContent.errorResponseNone)
+        await expect(responseBody.message).toContain(testDataForContent.errorResponseNone)
     })
 
     test('Request with wrong Api Key header', async ({request}) => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithWrongApiKey,
         })
-        const message = JSON.parse((await response.body()).toString())
+        const responseBody = JSON.parse((await response.body()).toString())
 
         await expect(response.status()).toBe(401)
-        await expect(message).toEqual(testDataForContent.errorResponseWrong)
-    })
-
-    
+        await expect(responseBody.message).toEqual(testDataForContent.errorResponseWrong)
+    })    
 })
