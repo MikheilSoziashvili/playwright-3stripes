@@ -29,7 +29,7 @@ class OnePlatformMainPage {
     }
 
     async goto() {
-        await this.page.goto('http://oneplfr-stg.one-platform.seu02.eu-central-1.int.k8s.3stripes.net/');
+        await this.page.goto('http://oneplfr-dev.one-platform.deu02.eu-central-1.int.k8s.3stripes.net/');
     }
 
     async verifyTitle() {
