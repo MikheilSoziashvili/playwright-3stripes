@@ -15,11 +15,7 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         const responseBody = await response.json()      
           
         await expect(response.ok()).toBeTruthy()
-        
-        const responseFromPresignedUrl = await request.get(responseBody.url, {
-            headers: testDataForContent.headerWithApiKey
-        })
 
-        console.log(responseFromPresignedUrl.json())
+        // console.log(responseFromPresignedUrl.json())
     })
 })
