@@ -11,11 +11,9 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
     test('Successful request', async ({request}) => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithApiKey
-        })
-        const responseBody = await response.json()      
+        })      
           
-        await expect(response.ok()).toBeTruthy()
-        
-        console.log(responseBody)
+        await expect(response.ok()).toBeTruthy();
+        await expect(response.url.includes('.s3.') && response.url.includes('amazonaws.com')).toBeTruthy();
     })
 })
