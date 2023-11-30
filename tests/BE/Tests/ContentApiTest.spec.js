@@ -15,7 +15,7 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         const responseBody = await response.json()      
           
         await expect(response.ok()).toBeTruthy()
-
-        // console.log(responseFromPresignedUrl.json())
+        
+        console.log(responseBody)
     })
 })
