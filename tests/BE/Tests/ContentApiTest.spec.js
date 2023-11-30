@@ -8,7 +8,7 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         // headers: testDataForContent.headerWithApiKey
     })
 
-    test('Successful request with Presigned URL content', async ({request}) => {
+    test('Successful request', async ({request}) => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithApiKey
         })
