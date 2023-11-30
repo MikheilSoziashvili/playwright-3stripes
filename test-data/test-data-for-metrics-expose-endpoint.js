@@ -21,7 +21,7 @@ const headerWithDifferentContentType = {
 
 const paramsBody = {
     "date": 16980424320,
-    "leanIxId": "16980424320"
+    "leanixId": "16980424320"
 }
 
 const paramsBodyDifferent = {
