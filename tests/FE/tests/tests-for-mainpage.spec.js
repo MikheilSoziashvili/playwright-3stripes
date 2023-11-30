@@ -1,7 +1,7 @@
 const { test } = require('@playwright/test');
 const { OnePlatformMainPage } = require('../pageObjects/OnePlatformMainPage')
 
-test.describe('One Platform main page functionalities @ONEPLFR-322', () => {
+test.describe('One Platform main page functionalities @ONEPLFR-401', () => {
 
     let onePlfrMainPage;
 
