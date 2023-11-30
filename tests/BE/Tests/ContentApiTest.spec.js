@@ -14,6 +14,6 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         })      
           
         await expect(response.ok()).toBeTruthy();
-        await expect(response.json().url.includes('.s3.') && response.url.includes('amazonaws.com')).toBeTruthy();
+        await expect(response.json().url).toContain(".s3.eu-central-1.amazonaws.com");
     })
 })
