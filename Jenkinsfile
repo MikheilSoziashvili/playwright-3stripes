@@ -15,7 +15,7 @@ def jiraEnvironment = "PROD"
 def jiraSummary = "Test Plan $params.TEST_PLAN_KEY execution"                                    
 
 pipeline {
-    agent { label 'custom_fip_node_aws' }
+    agent { label 'ubuntu_node-18_playwright' }
     environment {
         NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"                                   
         ENV = tools.git.getSimplifiedBranchName()                                
