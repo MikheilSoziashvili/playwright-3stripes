@@ -67,7 +67,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "apt-get -y install --no-install-recommends oathtool --privileged"
+                sh "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends install -y oathtool=2.*"
                 sh "npm install"
                 sh "npx playwright install"
                 sh "npx playwright --version"
