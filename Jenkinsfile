@@ -67,7 +67,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "sudo apt-get -y install --no-install-recommends oathtool"
+                sh "apt-get update"
+                sh "apt-get -y install --no-install-recommends oathtool --privileged"
                 sh "npm install"
                 sh "npx playwright install"
                 sh "npx playwright --version"
