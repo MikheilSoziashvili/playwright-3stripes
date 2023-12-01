@@ -21,7 +21,7 @@ const headerWithDifferentContentType = {
 
 const paramsBody = {
     "date": 16980424320,
-    "leanIxId": "16980424320"
+    "leanixId": "16980424320"
 }
 
 const paramsBodyDifferent = {
@@ -46,13 +46,9 @@ const positiveResponse = {
     }
 }
 
-const errorResponseWrong = {
-    "message": "Invalid authentication credentials"
-}
+const errorResponseWrong = "Invalid authentication credentials"
 
-const errorResponseNone = {
-    "message": "No API key found in request"
-}
+const errorResponseNone = "No API key found in request"
 
 module.exports.apiUrl = apiUrl
 module.exports.headerWithApiKey = headerWithApiKey
