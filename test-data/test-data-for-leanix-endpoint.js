@@ -34,10 +34,6 @@ const paramsBodyDifferent = {
     "leanIxId": "1620"
 }
 
-const positiveResponse = {
-
-}
-
 const errorResponseWrong = {
     "message": "Invalid authentication credentials"
 }
@@ -54,6 +50,5 @@ module.exports.requestBody = requestBody
 module.exports.requestBodyWithLessLimit = requestBodyWithLessLimit
 module.exports.headerWithWrongApiKey = headerWithWrongApiKey
 module.exports.paramsBodyDifferent = paramsBodyDifferent
-module.exports.positiveResponse = positiveResponse
 module.exports.errorResponseNone = errorResponseNone
 module.exports.errorResponseWrong = errorResponseWrong
