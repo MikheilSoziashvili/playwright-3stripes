@@ -1,5 +1,5 @@
 const pathToFile = '/undefined/frontend-item-info.json'
-const apiUrl = process.env.DEV_API_URL + '/content' + pathToFile
+const apiUrl = process.env.DEV_API_URL + '/platforms' + pathToFile
 
 const headerWithApiKey = {
     'Content-Type': 'application/json',
@@ -13,6 +13,10 @@ const headerWithoutApiKey = {
 const headerWithWrongApiKey = {
     'Content-Type': 'application/json',
     'Api-Key': 'wrongApiKey'
+}
+
+const positiveContentFromPresignedUrl = {
+
 }
 
 const positiveResponse = "https://oneplfr-platforms-content-dev.s3.eu-central-1.amazonaws.com"
