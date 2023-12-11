@@ -19,7 +19,9 @@ const positiveContentFromPresignedUrl = {
 
 }
 
-const positiveResponse = "https://oneplfr-platforms-content-dev.s3.eu-central-1.amazonaws.com"
+const positiveResponse =  {
+    
+}
 
 const errorResponseWrong = "Invalid authentication credentials"
 

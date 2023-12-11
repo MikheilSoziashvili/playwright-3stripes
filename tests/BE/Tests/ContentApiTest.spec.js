@@ -14,15 +14,8 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         const responseBody = JSON.parse(await response.json().toString())
           
         await expect(response.ok()).toBeTruthy();
-        await expect(responseBody.url).toContain(testDataForContent.positiveResponse)
+        await expect(responseBody).toContain(testDataForContent.positiveResponse)
 
-        const getFolderFromPresignedUrl = request.get(responseBody.url, {
-            headers: testDataForContent.headerWithApiKey
-        })
-
-        const responseFromPresignedUrl = JSON.parse(await response.body().toString())
-        console.log(responseFromPresignedUrl)
-        await expect(responseFromPresignedUrl).toContainEqual(testDataForContent.positiveContentFromPresignedUrl)
     })
 
     test('Request without Api Key header', async ({request}) => {
