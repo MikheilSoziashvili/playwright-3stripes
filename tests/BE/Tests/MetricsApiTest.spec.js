@@ -1,7 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
 import * as testDataForMetrics from '../../../test-data/test-data-for-metrics-endpoint';
 
-test.describe('Tests for metrics endpoint @ONEPLFR-352', async () => {
+test.describe('Tests for metrics endpoint @ONEPLFR-322', async () => {
     
     test.use({
         baseURL: testDataForMetrics.apiUrl

@@ -11,7 +11,7 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithApiKey
         })    
-        const responseBody = JSON.parse((await response.body()).toString())
+        const responseBody = JSON.parse(await response.body().toString())
           
         await expect(response.ok()).toBeTruthy();
         await expect(responseBody.url).toContain(testDataForContent.positiveResponse)
@@ -20,7 +20,7 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
             headers: testDataForContent.headerWithApiKey
         })
 
-        const responseFromPresignedUrl = JSON.parse((await response.body()).toString)
+        const responseFromPresignedUrl = JSON.parse(await response.body().toString())
         console.log(responseFromPresignedUrl)
         await expect(responseFromPresignedUrl).toContainEqual(testDataForContent.positiveContentFromPresignedUrl)
     })
