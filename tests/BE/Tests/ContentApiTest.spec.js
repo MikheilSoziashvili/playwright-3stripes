@@ -21,6 +21,7 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         })
 
         const responseFromPresignedUrl = JSON.parse((await response.body()).toString)
+        console.log(responseFromPresignedUrl)
         await expect(responseFromPresignedUrl).toContainEqual(testDataForContent.positiveContentFromPresignedUrl)
     })
 
