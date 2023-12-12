@@ -10,23 +10,7 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
 
     //Current defect:
     test('Limit parameter functionality check', async ({ request }) => {
-        // const response = await request.post('', {
-        //     headers: testDataforLeanix.headerWithApiKey,
-        //     data: testDataforLeanix.requestBody
-        // })
 
-        // expect(Array.isArray((await response.json())) && (await response.json()).length > 0).toBe(true);
-        // const firstresponseArray = Array.isArray(await response.json()) ? await response.json() : Object.entries(await response.json());
-        // const firstResponseLength = firstResponseArray.length;
-
-        // const responseWithDifferentLimit = await request.post('', {
-        //     headers: testDataforLeanix.headerWithApiKey,
-        //     data: testDataforLeanix.requestBodyWithLessLimit
-        // })
-
-        // const responseJson = await responseWithDifferentLimit.json();
-        // const responseArray = Array.isArray(responseJson) ? responseJson : Object.entries(responseJson);
-        // expect(responseArray.length).toBeLessThan(firstResponseLength);
     });
 
     test('Query parameter functionality check', async ({ request }) => {
