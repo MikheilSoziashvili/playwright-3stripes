@@ -1,7 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
 import * as testDataforLeanix from '../../../test-data/test-data-for-leanix-endpoint';
 
-test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
+test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
 
     test.use({
         baseURL: testDataforLeanix.apiUrl
@@ -13,7 +13,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true);
+        expect(Array.isArray(response) && response.length > 0).toBe(true);
         const firstResponseLength = response.lengthOf
 
         const responseWithDifferentLimit = await request.post('', {
@@ -42,7 +42,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true);
+        expect(Array.isArray(response) && response.length > 0).toBe(true);
         response.forEach(item => {
             expect(item.ttl).toBeDefined();
             expect(item.sk).toBeDefined();
@@ -70,7 +70,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true);
+        expect(Array.isArray(response) && response.length > 0).toBe(true);
         response.forEach(item => {
             expect(item.sk).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');
             expect(item.pk).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');
@@ -83,7 +83,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true);
+        expect(Array.isArray(response) && response.length > 0).toBe(true);
         response.forEach((item) => {
             expect(item.leanixName).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');
         });
@@ -113,7 +113,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true).that.is.not.empty;
+        expect(Array.isArray(response) && response.length > 0).toBe(true).that.is.not.empty;
     });
 
     test('Ttl, sk, pk, and leanixName are not null or undefined', async ({ request }) => {
@@ -122,7 +122,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true);
+        expect(Array.isArray(response) && response.length > 0).toBe(true);
         response.forEach(function (item) {
             expect(item.ttl).toBeDefined().and.not.toBe(null);
             expect(item.sk).toBeDefined().and.not.toBe(null);
@@ -243,7 +243,7 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(responseData) && responseData.length > 0).toBe(true).that.is.not.empty;
+        expect(Array.isArray(response) && response.length > 0).toBe(true).that.is.not.empty;
         response.forEach(item => {
             expect(item).toHaveProperty('ttl');
             expect(item).toHaveProperty('sk');
