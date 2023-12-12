@@ -13,15 +13,17 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true);
-        const firstResponseLength = await response.json().toArray().length;
+        expect(Array.isArray((await response.json())) && (await response.json()).length > 0).toBe(true);
+        const firstResponseLength = await response.json().length;
 
         const responseWithDifferentLimit = await request.post('', {
             headers: testDataforLeanix.headerWithApiKey,
             body: testDataforLeanix.requestBodyWithLessLimit
         })
 
-        expect(await responseWithDifferentLimit.toArray().json().length).toBeLessThan(firstResponseLength);
+        const responseJson = await responseWithDifferentLimit.json();
+        const responseArray = Array.isArray(responseJson) ? responseJson : Object.entries(responseJson);
+        expect(responseArray.length).toBeLessThan(firstResponseLength);
     });
 
     test('Query parameter functionality check', async ({ request }) => {
@@ -30,8 +32,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true);
-        await response.json().toArray().forEach(item => {
+        expect(Array.isArray(await response.json()) && await response.json().length > 0).toBe(true);
+        await response.json().forEach(item => {
             expect(item.leanixName).toContain(testDataforLeanix.requestBody.query);
         });
     });
@@ -42,8 +44,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true);
-        await response.json().toArray().forEach(item => {
+        expect(Array.isArray(await response.json()) && await response.json().length > 0).toBe(true);
+        await response.json().forEach(item => {
             expect(item.ttl).toBeDefined();
             expect(item.sk).toBeDefined();
             expect(item.pk).toBeDefined();
@@ -57,7 +59,7 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        await response.json().toArray().forEach((item) => {
+        await response.json().forEach((item) => {
             
             expect(item.ttl).to.be.a('number');
             expect(item.ttl).to.be.at.least(0, 'TTL should be a non-negative integer');
@@ -71,8 +73,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         })
         
 
-        expect(await response.json().toArray()).toContainValue({ isArray: true, length: { greaterThan: 0 } });
-        await response.json().toArray().forEach(item => {
+        expect(await response.json()).toContainValue({ isArray: true, length: { greaterThan: 0 } });
+        await response.json().forEach(item => {
             expect(item.ttl).toBeDefined();
             expect(item.sk).toBeDefined();
             expect(item.pk).toBeDefined();
@@ -86,8 +88,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true);
-        await response.json().toArray().forEach((item) => {
+        expect(Array.isArray(await response.json()) && await response.json().length > 0).toBe(true);
+        await response.json().forEach((item) => {
             expect(item.leanixName).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');
         });
     });
@@ -116,7 +118,7 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true).that.is.not.empty;
+        expect(Array.isArray(await response.json()) && await response.json().length > 0).toBe(true).that.is.not.empty;
     });
 
     test('Ttl, sk, pk, and leanixName are not null or undefined', async ({ request }) => {
@@ -125,8 +127,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true);
-        await response.json().toArray().forEach((item) => {
+        expect(Array.isArray(await response.json()) && await response.json().length > 0).toBe(true);
+        await response.json().forEach((item) => {
             expect(item.ttl).toBeDefined().and.not.toBe(null);
             expect(item.sk).toBeDefined().and.not.toBe(null);
             expect(item.pk).toBeDefined().and.not.toBe(null);
@@ -139,8 +141,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(await response.json().toArray()) && await response.json().toArray().length > 0).toBe(true);
-        await response.json().toArray().forEach(item => {
+        expect(Array.isArray(await response.json()) && await response.json().length > 0).toBe(true);
+        await response.json().forEach(item => {
             expect(item).toHaveProperty('ttl');
             expect(item).toHaveProperty('sk');
             expect(item).toHaveProperty('pk');
