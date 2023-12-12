@@ -42,6 +42,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
+        console.log(response.json());
+
         expect(Array.isArray(response.json()) && response.json().length > 0).toBe(true);
         response.json().forEach(item => {
             expect(item.ttl).toBeDefined();
