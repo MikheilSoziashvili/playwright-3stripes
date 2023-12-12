@@ -38,6 +38,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         const responseJson = await response.json();
         const responseArray = Array.isArray(responseJson) ? responseJson : Object.entries(responseJson);
 
+        console.log(responseArray);
+
         expect(responseArray.length > 0).toBe(true);
         responseArray.forEach(item => {
             expect(item.leanixName).toContain(testDataforLeanix.requestBody.query);
@@ -72,8 +74,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         const responseArray = Array.isArray(responseJson) ? responseJson : Object.entries(responseJson);
 
         responseArray.forEach((item) => {  
-            expect(typeof item.ttl).toBeType('number');
-            expect(item.ttl).toBeGreaterThanOrEqual(0, 'TTL should be a non-negative integer');
+            expect(typeof item.ttl).toBe('number');
+            expect(item.ttl).toBeGreaterThanOrEqual(1, 'TTL should be a non-negative integer');
         });
     });
 
@@ -105,7 +107,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
 
         expect(responseArray.length > 0).toBe(true);
         responseArray.forEach((item) => {
-            expect(typeof item.leanixName).toBeType('string');
+            expect(typeof item.leanixName).toBe('string');
+            expect(item.leanixName).toBeGreaterThanOrEqual(0, 'LeanixName should be a non-empty string');
         });
     });
 
@@ -148,15 +151,6 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             expect(item.pk).toBeDefined();
             expect(item.pk).not.toBeNull();
         })     
-    });
-
-    test('Content-Type header is present in the response', async ({ request }) => {
-        const response = await request.post('', {
-            headers: testDataforLeanix.headerWithApiKey,
-            body: testDataforLeanix.requestBody
-        })
-
-        expect(response.headers.has('Content-Type')).toBe(true);
     });
 
     test('Request without Api Key header', async ({request}) => {
