@@ -70,10 +70,52 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             body: testDataforLeanix.requestBody
         })
 
-        expect(Array.isArray(response) && response.length > 0).toBe(true);
+        expect(response).toContainValue({ isArray: true, length: { greaterThan: 0 } });
         response.forEach(item => {
-            expect(item.sk).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');
-            expect(item.pk).to.be.a('string').and.to.have.lengthOf.at.least(1, 'Value should not be empty');
+            expect(item.ttl).toBeDefined();
+            expect(item.sk).toBeDefined();
+            expect(item.pk).toBeDefined();
+            expect(item.leanixName).toBeDefined();
+        });
+
+        test('TTL is a non-negative integer', async ({ request }) => {
+            const response = await request.post('', {
+                headers: testDataforLeanix.headerWithApiKey,
+                body: testDataforLeanix.requestBody
+            })
+
+            response.forEach((item) => {
+                expect(item.ttl).toBeType('number');
+                expect(item.ttl).toBeGreaterThanOrEqual(0);
+            });
+        });
+
+        test('Sk and pk should be non-empty strings', async ({ request }) => {
+            const response = await request.post('', {
+                headers: testDataforLeanix.headerWithApiKey,
+                body: testDataforLeanix.requestBody
+            })
+
+            expect(response).toContainValue({ isArray: true, length: { greaterThan: 0 } });
+            response.forEach(item => {
+                expect(item.sk).toBeType('string');
+                expect(item.sk).not.toHaveLength(0);
+                expect(item.pk).toBeType('string');
+                expect(item.pk).not.toHaveLength(0);
+            });
+        });
+
+        test('LeanixName should be a non-empty string', async ({ request }) => {
+            const response = await request.post('', {
+                headers: testDataforLeanix.headerWithApiKey,
+                body: testDataforLeanix.requestBody
+            })
+
+            expect(response).toContainValue({ isArray: true, length: { greaterThan: 0 } });
+            response.forEach((item) => {
+                expect(item.leanixName).toBeType('string');
+                expect(item.leanixName).not.toHaveLength(0);
+            });
         });
     });
 
