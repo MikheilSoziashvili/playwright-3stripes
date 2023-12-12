@@ -1,5 +1,5 @@
 const pathToFile = '/undefined/frontend-item-info.json'
-const apiUrl = process.env.DEV_API_URL + '/content' + pathToFile
+const apiUrl = process.env.DEV_API_URL + '/platforms/'
 
 const headerWithApiKey = {
     'Content-Type': 'application/json',
