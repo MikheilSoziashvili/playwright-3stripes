@@ -14,7 +14,8 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         })
 
         expect(Array.isArray((await response.json())) && (await response.json()).length > 0).toBe(true);
-        const firstResponseLength = await response.json().length;
+        const firstResponse = await response.json();
+        const firstResponseLength = firstResponse.length;
 
         const responseWithDifferentLimit = await request.post('', {
             headers: testDataforLeanix.headerWithApiKey,
