@@ -14,14 +14,14 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         })
 
         expect(Array.isArray(response) && response.length > 0).toBe(true);
-        const firstResponseLength = response.lengthOf
+        const firstResponseLength = response.length;
 
         const responseWithDifferentLimit = await request.post('', {
             headers: testDataforLeanix.headerWithApiKey,
             body: testDataforLeanix.requestBodyWithLessLimit
         })
 
-        expect(responseWithDifferentLimit.length).toBe(firstResponseLength)
+        expect(responseWithDifferentLimit.length).toBeLessThan(firstResponseLength);
     });
 
     test('Query parameter functionality check', async ({ request }) => {
@@ -69,6 +69,7 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             headers: testDataforLeanix.headerWithApiKey,
             body: testDataforLeanix.requestBody
         })
+        
 
         expect(response).toContainValue({ isArray: true, length: { greaterThan: 0 } });
         response.forEach(item => {
@@ -77,47 +78,7 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             expect(item.pk).toBeDefined();
             expect(item.leanixName).toBeDefined();
         });
-
-        test('TTL is a non-negative integer', async ({ request }) => {
-            const response = await request.post('', {
-                headers: testDataforLeanix.headerWithApiKey,
-                body: testDataforLeanix.requestBody
-            })
-
-            response.forEach((item) => {
-                expect(item.ttl).toBeType('number');
-                expect(item.ttl).toBeGreaterThanOrEqual(0);
-            });
-        });
-
-        test('Sk and pk should be non-empty strings', async ({ request }) => {
-            const response = await request.post('', {
-                headers: testDataforLeanix.headerWithApiKey,
-                body: testDataforLeanix.requestBody
-            })
-
-            expect(response).toContainValue({ isArray: true, length: { greaterThan: 0 } });
-            response.forEach(item => {
-                expect(item.sk).toBeType('string');
-                expect(item.sk).not.toHaveLength(0);
-                expect(item.pk).toBeType('string');
-                expect(item.pk).not.toHaveLength(0);
-            });
-        });
-
-        test('LeanixName should be a non-empty string', async ({ request }) => {
-            const response = await request.post('', {
-                headers: testDataforLeanix.headerWithApiKey,
-                body: testDataforLeanix.requestBody
-            })
-
-            expect(response).toContainValue({ isArray: true, length: { greaterThan: 0 } });
-            response.forEach((item) => {
-                expect(item.leanixName).toBeType('string');
-                expect(item.leanixName).not.toHaveLength(0);
-            });
-        });
-    });
+    });  
 
     test('LeanixName should be a non-empty string', async ({ request }) => {
         const response = await request.post('', {
@@ -169,42 +130,7 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
             expect(item.ttl).toBeDefined().and.not.toBe(null);
             expect(item.sk).toBeDefined().and.not.toBe(null);
             expect(item.pk).toBeDefined().and.not.toBe(null);
-            
-            
-    test('Response is an array with at least one element', async () => {
-        const response = await request.post('', {
-            headers: testDataforLeanix.headerWithApiKey,
-            body: testDataforLeanix.requestBody
-        })
-
-        expect(Array.isArray(response) && response.length > 0).toBe(true);
-    });
-
-    test('Ttl, sk, pk, and leanixName are not null or undefined', async () => {
-        const response = await request.post('', {
-            headers: testDataforLeanix.headerWithApiKey,
-            body: testDataforLeanix.requestBody
-        })
-
-        expect(Array.isArray(response) && response.length > 0).toBe(true);
-        response.forEach(function (item) {
-            expect(item.ttl).toBeDefined();
-            expect(item.ttl).not.toBeNull();
-            expect(item.sk).toBeDefined();
-            expect(item.sk).not.toBeNull();
-            expect(item.pk).toBeDefined();
-            expect(item.pk).not.toBeNull();
-            expect(item.leanixName).toBeDefined();
-            expect(item.leanixName).not.toBeNull();
-        });
-    });
-
-    test('Content-Type header is present in the response', async () => {
-        const response = await request.post('', {
-            headers: testDataforLeanix.headerWithApiKey,
-            body: testDataforLeanix.requestBody
-        })
-        expect(response.headers.has('Content-Type')).toBe(true);
+        })     
     });
 
     test('Verify that the response does not contain any unexpected fields', async () => {
@@ -222,76 +148,12 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         });
     });
 
-    test('Response is an array with at least one element', async () => {
+    test('Content-Type header is present in the response', async () => {
         const response = await request.post('', {
             headers: testDataforLeanix.headerWithApiKey,
             body: testDataforLeanix.requestBody
         })
-
-        expect(Array.isArray(response) && response.length > 0).toBe(true);
-    });
-
-    test('Ttl, sk, pk, and leanixName are not null or undefined', async () => {
-        const response = await request.post('', {
-            headers: testDataforLeanix.headerWithApiKey,
-                    body: testDataforLeanix.requestBody
-                })
-
-        expect(Array.isArray(response) && response.length > 0).toBe(true);
-        response.forEach(function (item) {
-            expect(item.ttl).toBeDefined();
-            expect(item.ttl).not.toBeNull();
-            expect(item.sk).toBeDefined();
-            expect(item.sk).not.toBeNull();
-            expect(item.pk).toBeDefined();
-            expect(item.pk).not.toBeNull();
-            expect(item.leanixName).toBeDefined();
-            expect(item.leanixName).not.toBeNull();
-        });
-    });
-
-        test('Content-Type header is present in the response', async () => {
-            const response = await request.post('', {
-                headers: testDataforLeanix.headerWithApiKey,
-                body: testDataforLeanix.requestBody
-            })
             expect(response.headers.has('Content-Type')).toBe(true);
-        });
-
-        test('Verify that the response does not contain any unexpected fields', async () => {
-            const response = await request.post('', {
-                headers: testDataforLeanix.headerWithApiKey,
-                body: testDataforLeanix.requestBody
-            })
-
-            expect(Array.isArray(response) && response.length > 0).toBe(true);
-            response.forEach(item => {
-                expect(item).toHaveProperty('ttl');
-                expect(item).toHaveProperty('sk');
-                expect(item).toHaveProperty('pk');
-                expect(item).toHaveProperty('leanixName');
-            });
-        });    expect(item.leanixName).toBeDefined().and.not.toBe(null);
-        });
-    });
-
-    test('Content-Type header is present in the response', async ({ request }) => {
-        expect(response.headers.has('Content-Type')).toBe(true);
-    });
-
-    test('Verify that the response does not contain any unexpected fields', async ({ request }) => {
-        const response = await request.post('', {
-            headers: testDataforLeanix.headerWithApiKey,
-            body: testDataforLeanix.requestBody
-        })
-
-        expect(Array.isArray(response) && response.length > 0).toBe(true).that.is.not.empty;
-        response.forEach(item => {
-            expect(item).toHaveProperty('ttl');
-            expect(item).toHaveProperty('sk');
-            expect(item).toHaveProperty('pk');
-            expect(item).toHaveProperty('leanixName');
-        });
     });
 
     test('Request without Api Key header', async ({request}) => {
@@ -315,6 +177,4 @@ test.describe('Tests for LeanIx API @ONEPLFR-352', async () => {
         await expect(response.ok()).toBeFalsy()
         await expect(responseBody).toEqual(testDataforLeanix.errorResponseWrong)
     })
-
-
 })
