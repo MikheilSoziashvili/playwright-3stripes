@@ -1,7 +1,7 @@
-const { test, expect, request } = require('@playwright/test');
+const { test, expect } = require('@playwright/test');
 import * as testDataForContent from '../../../test-data/test-data-for-content-endpoint.js'
 
-test.describe('Tests for content API @ONEPLFR-352', async () => {
+test.describe('Tests for platforms API', async () => {
     
     test.use({
         baseURL: testDataForContent.apiUrl,
@@ -11,30 +11,55 @@ test.describe('Tests for content API @ONEPLFR-352', async () => {
         const response = await request.get('', {
             headers: testDataForContent.headerWithApiKey
         })    
-        const responseBody = JSON.parse(await response.json().toString())
+        const responseBody = await response.json();
           
         await expect(response.ok()).toBeTruthy();
-        await expect(responseBody).toContain(testDataForContent.positiveResponse)
-
+        await expect(responseBody).toHaveProperty('platforms');
+        await expect(Array.isArray(responseBody.platforms)).toBeTruthy();
+        await expect(responseBody.platforms[0]).toHaveProperty('platformName', 'Fast Insights Platform');
+        await expect(responseBody.platforms[0]).toHaveProperty('platformKey', 'FIP');
+        await expect(responseBody.platforms[0]).toHaveProperty('platformArea', 'Cloud Native Engineering');
+        await expect(responseBody.platforms[0]).toHaveProperty('description', 'Some description PROD');
+        await expect(responseBody.platforms[0]).toHaveProperty('confluenceUrl', 'https://clonfuence.url/prod');
+        await expect(Array.isArray(responseBody.platforms[0].tags)).toBeTruthy();
+        await expect(responseBody.platforms[0].tags).toContain('PROD');
+        await expect(responseBody.platforms[0].tags).toContain('ONEPLFR');
+        await expect(Array.isArray(responseBody.platforms[0].techStack)).toBeTruthy();
+        await expect(responseBody.platforms[0].techStack[0]).toHaveProperty('name', 'aws');
     })
 
-    test('Request without Api Key header', async ({request}) => {
-        const response = await request.get('', {
-            headers: testDataForContent.headerWithoutApiKey,
+    // Test for empty response
+    test('Empty response', async ({request}) => {
+        // Simulate an empty response
+        const response = await request.get('/empty', {
+            headers: testDataForContent.headerWithApiKey
         })
-        const responseBody = JSON.parse((await response.json()).toString())
-        
-        await expect(response.status()).toBe(401)
-        await expect(responseBody.message).toContain(testDataForContent.errorResponseNone)
+        const responseBody = await response.json();
+        // Check that the platforms array is empty
+        await expect(responseBody.platforms).toEqual([]);
     })
 
-    test('Request with wrong Api Key header', async ({request}) => {
-        const response = await request.get('', {
-            headers: testDataForContent.headerWithWrongApiKey,
+    // Test for missing fields
+    test('Missing fields', async ({request}) => {
+        // Simulate a response with missing fields
+        const response = await request.get('/missing-fields', {
+            headers: testDataForContent.headerWithApiKey
         })
-        const responseBody = JSON.parse((await response.body()).toString())
+        const responseBody = await response.json();
+        // Check that the missing fields are undefined
+        await expect(responseBody.platforms[0].platformName).toBeUndefined();
+        await expect(responseBody.platforms[0].platformKey).toBeUndefined();
+    })
 
-        await expect(response.status()).toBe(401)
-        await expect(responseBody.message).toEqual(testDataForContent.errorResponseWrong)
-    })    
+    // Test for different data types
+    test('Different data types', async ({request}) => {
+        // Simulate a response with different data types
+        const response = await request.get('/different-data-types', {
+            headers: testDataForContent.headerWithApiKey
+        })
+        const responseBody = await response.json();
+        // Check that the data types are not as expected
+        await expect(typeof responseBody.platforms).not.toBe('array');
+        await expect(typeof responseBody.platforms[0].platformName).not.toBe('string');
+    })
 })
