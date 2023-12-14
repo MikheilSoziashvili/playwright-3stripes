@@ -1,7 +1,7 @@
 const { test, expect, request } = require('@playwright/test');
-import * as testDataForMetricsExpose from '../../../test-data/test-data-for-metrics-expose';
+import * as testDataForMetricsExpose from '../../../test-data/test-data-for-metrics-expose-endpoint';
 
-test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
+test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     
     test.use({
         baseURL: testDataForMetricsExpose.apiUrl
@@ -15,7 +15,6 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
         const responseBody = await response.json()      
           
         await expect(response.ok()).toBeTruthy()
-        
         await expect(responseBody).toEqual(testDataForMetricsExpose.positiveResponse)
     })
 
@@ -24,10 +23,10 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             headers: testDataForMetricsExpose.headerWithoutApiKey,
             params: testDataForMetricsExpose.paramsBody
         })
-        const responseBody = await response.json()
-
-        // await expect(response.ok()).toBeFalsy()
-        // await expect(responseBody).toEqual(testDataForMetricsExpose.errorResponseNone)
+        const responseBody = JSON.parse((await response.body()).toString())
+        
+        await expect(response.status()).toBe(401)
+        await expect(responseBody.message).toContain(testDataForMetricsExpose.errorResponseNone)
     })
 
     test('Request with wrong Api Key header', async ({request}) => {
@@ -35,20 +34,20 @@ test.describe('Tests for metrics-expose API @ONEPLFR-352', async () => {
             headers: testDataForMetricsExpose.headerWithWrongApiKey,
             params: testDataForMetricsExpose.paramsBody
         })
-        const responseBody = await response.json()
-
-        // await expect(response.ok()).toBeFalsy()
-        // await expect(responseBody).toEqual(testDataForMetricsExpose.errorResponseWrong)
+        const responseBody = JSON.parse((await response.body()).toString())
+        
+        await expect(response.status()).toBe(401)
+        await expect(responseBody.message).toContain(testDataForMetricsExpose.errorResponseWrong)
     })
 
     test('Request without parameters', async ({request}) => {
         const response = await request.get('', {
             headers: testDataForMetricsExpose.headerWithWrongApiKey
         })
-        const responseBody = await response.json()
-
-        // await expect(response.ok()).toBeFalsy()
-        // await expect(responseBody).toEqual()  //Will update after resolving current defect
+        const message = JSON.parse((await response.body()).toString())
+        
+        // await expect(response.status()).toBe(401)
+        // await expect(message).toContain(testDataForMetricsExpose.errorResponseWrong)
     })
 
     test('Request with only date', async ({request}) => {
