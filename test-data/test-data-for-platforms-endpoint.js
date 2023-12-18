@@ -14,26 +14,13 @@ const headerWithWrongApiKey = {
     'Api-Key': 'wrongApiKey'
 }
 
-const positiveContentFromPresignedUrl = {
-
-}
-
-const positiveResponse =  {
-    
-}
-
 const errorResponseWrong = "Invalid authentication credentials"
 
 const errorResponseNone = "No API key found in request"
-
-const validFileContent = {
-
-}
 
 module.exports.apiUrl = apiUrl
 module.exports.headerWithApiKey = headerWithApiKey
 module.exports.headerWithoutApiKey = headerWithoutApiKey
 module.exports.headerWithWrongApiKey = headerWithWrongApiKey
-module.exports.positiveResponse = positiveResponse
 module.exports.errorResponseNone = errorResponseNone
 module.exports.errorResponseWrong = errorResponseWrong

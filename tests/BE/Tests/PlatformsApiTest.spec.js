@@ -1,15 +1,15 @@
 const { test, expect } = require('@playwright/test');
-import * as testDataForContent from '../../../test-data/test-data-for-content-endpoint.js'
+import * as testDataForPlatforms from '../../../test-data/test-data-for-platforms-endpoint.js'
 
 test.describe('Tests for platforms API', async () => {
     
     test.use({
-        baseURL: testDataForContent.apiUrl,
+        baseURL: testDataForPlatforms.apiUrl,
     })
 
     test('Successful request, also Validating The response', async ({request}) => {
         const response = await request.get('', {
-            headers: testDataForContent.headerWithApiKey
+            headers: testDataForPlatforms.headerWithApiKey
         })    
         const responseBody = await response.json();
           
@@ -28,38 +28,23 @@ test.describe('Tests for platforms API', async () => {
         await expect(responseBody.platforms[0].techStack[0]).toHaveProperty('name', 'aws');
     })
 
-    // Test for empty response
-    test('Empty response', async ({request}) => {
-        // Simulate an empty response
-        const response = await request.get('/empty', {
-            headers: testDataForContent.headerWithApiKey
-        })
+    test('Request without api key in header', async ({request}) => {
+        const response = await request.get('', {
+            headers: testDataForPlatforms.headerWithoutApiKey
+        })    
         const responseBody = await response.json();
-        // Check that the platforms array is empty
-        await expect(responseBody.platforms).toEqual([]);
+          
+        await expect(response.ok()).toBeFalsy();
+        await expect(responseBody).toHaveProperty('error', testDataForPlatforms.errorResponseNone);
     })
 
-    // Test for missing fields
-    test('Missing fields', async ({request}) => {
-        // Simulate a response with missing fields
-        const response = await request.get('/missing-fields', {
-            headers: testDataForContent.headerWithApiKey
+    test('Request with wrong api key in header', async ({request}) => {
+        const response = await request.get('', {
+            headers: testDataForPlatforms.headerWithWrongApiKey
         })
         const responseBody = await response.json();
-        // Check that the missing fields are undefined
-        await expect(responseBody.platforms[0].platformName).toBeUndefined();
-        await expect(responseBody.platforms[0].platformKey).toBeUndefined();
-    })
-
-    // Test for different data types
-    test('Different data types', async ({request}) => {
-        // Simulate a response with different data types
-        const response = await request.get('/different-data-types', {
-            headers: testDataForContent.headerWithApiKey
-        })
-        const responseBody = await response.json();
-        // Check that the data types are not as expected
-        await expect(typeof responseBody.platforms).not.toBe('array');
-        await expect(typeof responseBody.platforms[0].platformName).not.toBe('string');
+          
+        await expect(response.ok()).toBeFalsy();
+        await expect(responseBody).toHaveProperty('error', testDataForPlatforms.errorResponseWrong);
     })
 })
