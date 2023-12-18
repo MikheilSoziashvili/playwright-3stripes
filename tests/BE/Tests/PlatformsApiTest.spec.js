@@ -35,7 +35,7 @@ test.describe('Tests for Platforms API @ONEPLFR-352', async () => {
         const responseBody = await response.json();
           
         await expect(response.ok()).toBeFalsy();
-        await expect(responseBody).toHaveProperty('error', testDataForPlatforms.errorResponseNone);
+        await expect(responseBody).toHaveProperty('message', testDataForPlatforms.errorResponseNone);
     })
 
     test('Request with wrong api key in header', async ({request}) => {
@@ -45,6 +45,6 @@ test.describe('Tests for Platforms API @ONEPLFR-352', async () => {
         const responseBody = await response.json();
           
         await expect(response.ok()).toBeFalsy();
-        await expect(responseBody).toHaveProperty('error', testDataForPlatforms.errorResponseWrong);
+        await expect(responseBody).toHaveProperty('message', testDataForPlatforms.errorResponseWrong);
     })
 })
