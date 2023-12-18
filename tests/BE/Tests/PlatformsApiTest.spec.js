@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 import * as testDataForPlatforms from '../../../test-data/test-data-for-platforms-endpoint.js'
 
-test.describe('Tests for platforms API', async () => {
+test.describe('Tests for Platforms API @ONEPLFR-352', async () => {
     
     test.use({
         baseURL: testDataForPlatforms.apiUrl,
