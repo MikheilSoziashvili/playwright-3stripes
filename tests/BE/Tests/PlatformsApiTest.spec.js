@@ -1,15 +1,15 @@
 const { test, expect } = require('@playwright/test');
-import * as testDataForContent from '../../../test-data/test-data-for-content-endpoint.js'
+import * as testDataForPlatforms from '../../../test-data/test-data-for-platforms-endpoint.js'
 
 test.describe('Tests for platforms API', async () => {
     
     test.use({
-        baseURL: testDataForContent.apiUrl,
+        baseURL: testDataForPlatforms.apiUrl,
     })
 
     test('Successful request, also Validating The response', async ({request}) => {
         const response = await request.get('', {
-            headers: testDataForContent.headerWithApiKey
+            headers: testDataForPlatforms.headerWithApiKey
         })    
         const responseBody = await response.json();
           
@@ -32,7 +32,7 @@ test.describe('Tests for platforms API', async () => {
     test('Empty response', async ({request}) => {
         // Simulate an empty response
         const response = await request.get('/empty', {
-            headers: testDataForContent.headerWithApiKey
+            headers: testDataForPlatforms.headerWithApiKey
         })
         const responseBody = await response.json();
         // Check that the platforms array is empty
@@ -43,7 +43,7 @@ test.describe('Tests for platforms API', async () => {
     test('Missing fields', async ({request}) => {
         // Simulate a response with missing fields
         const response = await request.get('/missing-fields', {
-            headers: testDataForContent.headerWithApiKey
+            headers: testDataForPlatforms.headerWithApiKey
         })
         const responseBody = await response.json();
         // Check that the missing fields are undefined
@@ -55,7 +55,7 @@ test.describe('Tests for platforms API', async () => {
     test('Different data types', async ({request}) => {
         // Simulate a response with different data types
         const response = await request.get('/different-data-types', {
-            headers: testDataForContent.headerWithApiKey
+            headers: testDataForPlatforms.headerWithApiKey
         })
         const responseBody = await response.json();
         // Check that the data types are not as expected
