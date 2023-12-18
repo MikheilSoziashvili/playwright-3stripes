@@ -8,7 +8,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Successful request', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headers: testDataForMetrics.headerWithApiKey,
             params: testDataForMetrics.paramsBody
         })
@@ -19,7 +19,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request without Api Key header', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headers: testDataForMetrics.headerWithoutApiKey,
             params: testDataForMetrics.paramsBody
         })
@@ -30,7 +30,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request with wrong Api Key header', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headers: testDataForMetrics.headerWithWrongApiKey,
             params: testDataForMetrics.paramsBody
         })
@@ -41,7 +41,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request without parameters', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headers: testDataForMetrics.headerWithWrongApiKey
         })
         const message = JSON.parse((await response.body()).toString())
@@ -51,7 +51,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request with only date', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headerWithApiKey: testDataForMetrics.headerWithApiKey,
             params: testDataForMetrics.paramsBody['date']
         })
@@ -62,7 +62,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request with only leanIxId', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headerWithApiKey: testDataForMetrics.headerWithApiKey,
             params: testDataForMetrics.paramsBody['leanIxId']
         })
@@ -73,7 +73,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request with different Content-Type', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headerWithDifferentContentType: testDataForMetrics.headerWithDifferentContentType, 
             params: testDataForMetrics.paramsBody
         })
@@ -84,7 +84,7 @@ test.describe('Tests for metrics API @ONEPLFR-322', async () => {
     })
 
     test('Request with different values', async ({request}) => {
-        const response = await request.get('', {
+        const response = await request.post('', {
             headerWithApiKey: testDataForMetrics.headerWithApiKey, 
             params: testDataForMetrics.paramsBodyDifferent
         })

@@ -20,29 +20,23 @@ const headerWithDifferentContentType = {
 }
 
 const paramsBody = {
-    "date": 16980424320,
-    "leanixId": "16980424320"
+    "leanixId": "0471d9c2-98e1-47ec-9597-f9d2471efbc4",
+    "start": "2023-12-01T09:40:34.359Z",
+    "end": "2023-12-05T14:59:34.359Z"
 }
 
 const paramsBodyDifferent = {
-    "date": 1698,
-    "leanIxId": "1620"
-}
+    "leanixId": "0471d9c2-98e1-47ec-9597-f9d2471efbc4",
+    "start": "2023-12-01T09:40:34.359Z",
+    "end": "2023-12-05T14:59:34.359Z"
+  }
 
 const positiveResponse = {
     "status": "success",
     "isPartial": false,
     "data": {
-        "resultType": "vector",
-        "result": [
-            {
-                "metric": {},
-                "value": [
-                    9223372036.854,
-                    "16980424320"
-                ]
-            }
-        ]
+        "resultType": "matrix",
+        "result": []
     }
 }
 
