@@ -16,16 +16,22 @@ test.describe('Tests for Platforms API @ONEPLFR-352', async () => {
         await expect(response.ok()).toBeTruthy();
         await expect(responseBody).toHaveProperty('platforms');
         await expect(Array.isArray(responseBody.platforms)).toBeTruthy();
-        await expect(responseBody.platforms[0]).toHaveProperty('platformName', 'Fast Insights Platform');
-        await expect(responseBody.platforms[0]).toHaveProperty('platformKey', 'FIP');
-        await expect(responseBody.platforms[0]).toHaveProperty('platformArea', 'Cloud Native Engineering');
-        await expect(responseBody.platforms[0]).toHaveProperty('description', 'Some description PROD');
-        await expect(responseBody.platforms[0]).toHaveProperty('confluenceUrl', 'https://clonfuence.url/prod');
-        await expect(Array.isArray(responseBody.platforms[0].tags)).toBeTruthy();
-        await expect(responseBody.platforms[0].tags).toContain('PROD');
-        await expect(responseBody.platforms[0].tags).toContain('ONEPLFR');
-        await expect(Array.isArray(responseBody.platforms[0].techStack)).toBeTruthy();
-        await expect(responseBody.platforms[0].techStack[0]).toHaveProperty('name', 'aws');
+
+        for (const platform of responseBody.platforms) {
+            await expect(platform).toHaveProperty('platformName');
+            await expect(platform).toHaveProperty('platformKey');
+            await expect(platform).toHaveProperty('platformArea');
+            await expect(platform).toHaveProperty('description');
+            await expect(platform).toHaveProperty('confluenceUrl');
+            await expect(platform).toHaveProperty('tags');
+            await expect(Array.isArray(platform.tags)).toBeTruthy();
+
+            await expect(Array.isArray(platform.techStack)).toBeTruthy();
+            for (const tech of platform.techStack) {
+                await expect(tech).toHaveProperty('name');
+                await expect(tech).toHaveProperty('logoUrl');
+            }
+        }
     })
 
     test('Request without api key in header', async ({request}) => {

@@ -22,10 +22,10 @@ const config = {
   testDir: "../../../tests/FE",
   testIgnore: ["**/Kafka/**", "**/Components/**", "**/MockAPIs/**"],
   /* Maximum time one test can run for. */
-  timeout: 120 * 1000,
+  timeout: 12 * 1000,
 
   expect: {
-    timeout: 8000,
+    timeout: 3000,
     
     toHaveScreenshot: { maxDiffPixels: 100 },
   },
@@ -34,7 +34,7 @@ const config = {
   /** Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -61,6 +61,9 @@ const config = {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
+        launchOptions: {
+          args: ["--start-maximized"]
+      } 
       },
     },
 
@@ -68,6 +71,9 @@ const config = {
       name: "firefox",
       use: {
         ...devices["Desktop Firefox"],
+        launchOptions: {
+          args: ["--start-maximized"]
+        } 
       },
     },
 
@@ -75,6 +81,9 @@ const config = {
       name: "webkit",
       use: {
         ...devices["Desktop Safari"],
+        launchOptions: {
+          args: ["--start-maximized"]
+        } 
       },
     },
 
