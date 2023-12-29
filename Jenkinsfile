@@ -12,7 +12,7 @@ def projectName = "oneplfr-qa-playwright"
 def email = "mikheil.soziashvili@externals.adidas.com"                                                     
 
 def jiraEnvironment = "PROD"                                                                      
-def jiraSummary = "Test Plan $params.TEST_PLAN_KEY execution"                                    
+def jiraSummary = "Test Plan $env.TEST_PLAN_KEY execution"                                    
 
 pipeline {
     agent { label 'custom_fip_node_aws' }
@@ -39,16 +39,18 @@ pipeline {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH_NAME', type: 'PT_BRANCH'
         string(name: 'PROJECT_KEY', defaultValue: 'ONEPLFR', description: '*Mandatory!! - Your project key')
         string(name: 'TEST_PLAN_KEY', defaultValue: '', description: '*Mandatory!! - Test plan for executions and pushing the results')
-        choice(name: 'COMMANDS', choices: [      
-            'npx playwright test --config=./configFiles/FE/BrowserStack/BrowserStack.config.js',
-            'npx playwright test --config=./configFiles/FE/LocalBrowsers/LocalBrowsers.config.js',
-            'npx playwright test --config=./configFiles/FE/Moon/Moon.config.js',
-            'npx playwright test --config=./configFiles/FE/MobileDeviceEmulation/MobileDevices.config.js',
-            'npx playwright test --config=./configFiles/FE/RealAndroidDevices/RealAndroid.config.js',
-            'npx playwright test --config=./configFiles/BE/BE.config.js'
-            ], description: 'Choose a CLI command from the dropdown OR Use custom command by selecting the checkbox. For dropdown CLI commands, tests are executed based on the annotations specified in test file (e.g. @TED-24886 executes the wiktionary test)')
-        booleanParam(name: 'FROM_CUSTOM_COMMAND', defaultValue: false, description: 'If you activate this, fill the following field:')
-        string(name: 'CUSTOM_COMMAND', defaultValue: 'npm test', description: 'Test scripts/custom execution commands can be specified here. For using @annotation, specify the same using --grep flag')
+        string(name: 'TEST_TYPE', defaultValue: 'BE', description: '*Mandatory!! - Test type (FE/BE)')
+    }
+
+    stage('Initialize Parameters') {
+        steps {
+            script {
+                // Retrieve TEST_PLAN_KEY from an external source
+                TEST_PLAN_KEY = fetchTestPlanKey() // Implement this method as needed
+                echo "TEST_PLAN_KEY is set to: ${TEST_PLAN_KEY}"
+                echo "TEST_TYPE is set to: ${TEST_TYPE}"
+            }
+        }
     }
 
     stages {
@@ -57,7 +59,7 @@ pipeline {
                 checkout scm
                 echo "Checkout: done"
                 script {
-                    if (params.TEST_PLAN_KEY == "" || params.PROJECT_KEY == "") { 
+                    if (env.TEST_PLAN_KEY == "" || params.PROJECT_KEY == "") { 
                         currentBuild.result = 'ABORTED'
                         echo "ERROR: TEST_PLAN_KEY and/or PROJECT_KEY not set!!"
                         error('TEST_PLAN_KEY and/or PROJECT_KEY not set')
@@ -95,7 +97,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: svc_credentials, variable: 'token')]) {
-                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${params.TEST_PLAN_KEY}' --header 'Authorization: Bearer ${token}' --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
+                        sh "curl --location --request POST '${xrayImportUrl}?projectKey=${params.PROJECT_KEY}&testPlanKey=${env.TEST_PLAN_KEY}' --header 'Authorization: Bearer ${token}' --form 'file=@reports/junit.xml' -o ${xrayImportOutput}"
                     }
                     sh "cat reports/xray-response.json"
                     //Getting created execution key
@@ -108,7 +110,7 @@ pipeline {
 
                     withCredentials([string(credentialsId: svc_credentials, variable: 'token')]) {
                         //Linking Test Plan and Test Execution
-                        def url = 'https://jira.tools.3stripes.net/rest/raven/1.0/api/testplan/' + params.TEST_PLAN_KEY + '/testexecution'
+                        def url = 'https://jira.tools.3stripes.net/rest/raven/1.0/api/testplan/' + env.TEST_PLAN_KEY + '/testexecution'
                         def data = '@reports/data.json'
                         sh "curl -X POST ${url} ${xrayImportHeader} --header 'Authorization: Bearer ${token}' -d ${data}"
                         //Editing Test Execution attributes example
@@ -130,7 +132,8 @@ pipeline {
             }
         }
     }
-    post{
+
+    post {
         always {
             echo "Always"
         }
@@ -145,9 +148,11 @@ pipeline {
 
 def buildCommand() {
     def COMMAND = ''
-    if(params.FROM_CUSTOM_COMMAND) {
-        return params.CUSTOM_COMMAND
+    if(env.TEST_TYPE == 'FE') { 
+        return 'npx playwright test --config=./configFiles/FE/LocalBrowsers/LocalBrowsers.config.js' + " --grep=@" + env.TEST_PLAN_KEY
+    } else if(env.TEST_TYPE == 'BE') {
+        return 'npx playwright test --config=./configFiles/BE/BE.config.js' + " --grep=@" + env.TEST_PLAN_KEY
     } else {
-        return params.COMMANDS+ " --grep=@" + TEST_PLAN_KEY
+        return 'Please Specify: TEST_TYPE (FE/BE)'
     }
 }
